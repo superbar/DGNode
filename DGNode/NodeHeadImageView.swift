@@ -9,29 +9,32 @@
 import UIKit
 import PureLayout
 
-class NodeHeadImageView: UIScrollView, UIScrollViewDelegate {
+class NodeHeadImageView: UIView, UIScrollViewDelegate {
 
+    let scrollView = DGScrollView()
     let imageContainerView = UIView()
     let imageView = UIImageView()
     let addImageButton = UIButton()
+    let deleteHeadImageButton = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         backgroundColor = .white
         
-        delegate = self
-        maximumZoomScale = 3
-        minimumZoomScale = 1
-        showsHorizontalScrollIndicator = false
-        showsVerticalScrollIndicator = true
-        scrollsToTop = false
-        bouncesZoom = true
-        alwaysBounceVertical = false
-        clipsToBounds = true
+        scrollView.delegate = self
+        scrollView.maximumZoomScale = 3
+        scrollView.minimumZoomScale = 1
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.scrollsToTop = false
+        scrollView.bouncesZoom = true
+        scrollView.alwaysBounceVertical = false
+        scrollView.clipsToBounds = true
+        addSubview(scrollView)
         
         imageContainerView.clipsToBounds = true
-        addSubview(imageContainerView)
+        scrollView.contentView.addSubview(imageContainerView)
         
         imageContainerView.addSubview(imageView)
         
@@ -39,18 +42,31 @@ class NodeHeadImageView: UIScrollView, UIScrollViewDelegate {
         addImageButton.setTitleColor(.black, for: .normal)
         addImageButton.layer.borderColor = UIColor.black.cgColor
         addImageButton.layer.borderWidth = 1.0
+        addImageButton.layer.cornerRadius = 5.0
         addSubview(addImageButton)
         
+        deleteHeadImageButton.setTitle("X", for: .normal)
+        deleteHeadImageButton.setTitleColor(.black, for: .normal)
+        deleteHeadImageButton.layer.borderColor = UIColor.black.cgColor
+        deleteHeadImageButton.layer.borderWidth = 1.0
+        deleteHeadImageButton.layer.cornerRadius = 5.0
+        addSubview(deleteHeadImageButton)
     }
     
     func setFrame(frame: CGRect) {
         self.frame = frame
         
-        addImageButton.frame.size = CGSize.init(width: frame.width - 48, height: frame.height - 48)
+        scrollView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+        
+        addImageButton.frame.size = CGSize(width: frame.width - 48, height: frame.height - 48)
         addImageButton.top = 24
         addImageButton.left = 24
         
-        imageContainerView.frame = CGRect.init(x: 0, y: 0, width: frame.width, height: frame.height)
+        imageContainerView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+        
+        deleteHeadImageButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40);
+        deleteHeadImageButton.right = width - 12
+        deleteHeadImageButton.bottom = height - 12
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -59,36 +75,37 @@ class NodeHeadImageView: UIScrollView, UIScrollViewDelegate {
     
     func setImage(_ image: UIImage?) {
         guard let image = image else { return }
-        setZoomScale(1.0, animated: false)
-        maximumZoomScale = 1
+        scrollView.setZoomScale(1.0, animated: false)
+        scrollView.maximumZoomScale = 1
         imageView.image = image
-        maximumZoomScale = 3
+        scrollView.maximumZoomScale = 3
         resize()
     }
 
     func resize() {
         imageContainerView.frame = bounds
         guard let image = imageView.image else { return }
-        if (image.size.height / image.size.width > frame.height / frame.width) {
-            imageContainerView.frame.size.height = floor(image.size.height / (image.size.width / frame.width));
+        if (image.size.height / image.size.width > scrollView.frame.height / scrollView.frame.width) {
+            imageContainerView.frame.size.height = floor(image.size.height / (image.size.width / scrollView.frame.width));
         } else {
-            var height = image.size.height / image.size.width * frame.width;
+            var height = image.size.height / image.size.width * scrollView.frame.width;
             if (height < 1 || height.isNaN) {
-                height = frame.height
+                height = scrollView.frame.height
             }
             imageContainerView.frame.size.height = floor(height)
-            imageContainerView.center.y = frame.height / 2
+            imageContainerView.center.y = scrollView.frame.height / 2
         }
-        if (imageContainerView.frame.height > frame.height && imageContainerView.frame.height - frame.height <= 1) {
-            imageContainerView.frame.size.height = frame.height
+        if (imageContainerView.frame.height > scrollView.frame.height && imageContainerView.frame.height - scrollView.frame.height <= 1) {
+            imageContainerView.frame.size.height = scrollView.frame.height
         }
-        contentSize = CGSize(width: frame.width, height: max(imageContainerView.frame.height, frame.height))
-        scrollRectToVisible(bounds, animated: false)
+        let h = max(imageContainerView.frame.height, scrollView.frame.height)
+        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: h)
+        scrollView.scrollRectToVisible(scrollView.bounds, animated: false)
         
-        if (imageContainerView.frame.height <= frame.height) {
-            alwaysBounceVertical = false
+        if (imageContainerView.frame.height <= scrollView.frame.height) {
+            scrollView.alwaysBounceVertical = false
         } else {
-            alwaysBounceVertical = true
+            scrollView.alwaysBounceVertical = true
         }
         imageView.frame = imageContainerView.bounds
     }

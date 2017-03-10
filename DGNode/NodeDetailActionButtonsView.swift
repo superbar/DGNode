@@ -12,8 +12,8 @@ import PureLayout
 class NodeDetailActionButtonsView: UIView {
 
     let modifyNodeButton = UIButton()
-    let getNodeImageButton = UIButton()
-    let deleteNodeButton = UIButton()
+//    let getNodeImageButton = UIButton()
+//    let deleteNodeButton = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,21 +21,21 @@ class NodeDetailActionButtonsView: UIView {
         backgroundColor = .white
         
         setupModifyNodeButton()
-        setupGetNodeImageButton()
-        setupDeleteNodeButton()
+//        setupGetNodeImageButton()
+//        setupDeleteNodeButton()
         
         modifyNodeButton.autoSetDimension(.height, toSize: 44.0)
-        modifyNodeButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 12.0, left: 12.0, bottom: 0, right: 12.0), excludingEdge: .bottom)
+        modifyNodeButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12))
         
-        getNodeImageButton.autoPinEdge(toSuperviewEdge: .left, withInset: 12.0)
-        getNodeImageButton.autoPinEdge(toSuperviewEdge: .right, withInset: 12.0)
-        getNodeImageButton.autoSetDimension(.height, toSize: 44.0)
-        getNodeImageButton.autoPinEdge(.top, to: .bottom, of: modifyNodeButton, withOffset: 12.0)
-        
-        deleteNodeButton.autoPinEdge(toSuperviewEdge: .left, withInset: 12.0)
-        deleteNodeButton.autoPinEdge(toSuperviewEdge: .right, withInset: 12.0)
-        deleteNodeButton.autoSetDimension(.height, toSize: 44.0)
-        deleteNodeButton.autoPinEdge(.top, to: .bottom, of: getNodeImageButton, withOffset: 12.0)
+//        getNodeImageButton.autoPinEdge(toSuperviewEdge: .left, withInset: 12.0)
+//        getNodeImageButton.autoPinEdge(toSuperviewEdge: .right, withInset: 12.0)
+//        getNodeImageButton.autoSetDimension(.height, toSize: 44.0)
+//        getNodeImageButton.autoPinEdge(.top, to: .bottom, of: modifyNodeButton, withOffset: 12.0)
+//        
+//        deleteNodeButton.autoPinEdge(toSuperviewEdge: .left, withInset: 12.0)
+//        deleteNodeButton.autoPinEdge(toSuperviewEdge: .right, withInset: 12.0)
+//        deleteNodeButton.autoSetDimension(.height, toSize: 44.0)
+//        deleteNodeButton.autoPinEdge(.top, to: .bottom, of: getNodeImageButton, withOffset: 12.0)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,18 +49,18 @@ class NodeDetailActionButtonsView: UIView {
         addSubview(modifyNodeButton)
     }
     
-    func setupGetNodeImageButton() {
-        getNodeImageButton.setTitle("获取图片", for: .normal)
-        getNodeImageButton.setTitleColor(.white, for: .normal)
-        getNodeImageButton.setBackgroundImage(UIImage.image(.green), for: .normal)
-        addSubview(getNodeImageButton)
-    }
-    
-    func setupDeleteNodeButton() {
-        deleteNodeButton.setTitle("删除", for: .normal)
-        deleteNodeButton.setTitleColor(.white, for: .normal)
-        deleteNodeButton.setBackgroundImage(UIImage.image(.red), for: .normal)
-        addSubview(deleteNodeButton)
-    }
+//    func setupGetNodeImageButton() {
+//        getNodeImageButton.setTitle("获取图片", for: .normal)
+//        getNodeImageButton.setTitleColor(.white, for: .normal)
+//        getNodeImageButton.setBackgroundImage(UIImage.image(.green), for: .normal)
+//        addSubview(getNodeImageButton)
+//    }
+//    
+//    func setupDeleteNodeButton() {
+//        deleteNodeButton.setTitle("删除", for: .normal)
+//        deleteNodeButton.setTitleColor(.white, for: .normal)
+//        deleteNodeButton.setBackgroundImage(UIImage.image(.red), for: .normal)
+//        addSubview(deleteNodeButton)
+//    }
     
 }

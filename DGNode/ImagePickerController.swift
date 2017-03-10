@@ -28,8 +28,7 @@ class ImagePickerController: UIImagePickerController, UIImagePickerControllerDel
     }
     
     class func available(source: UIImagePickerControllerSourceType) -> Bool {
-        let available = UIImagePickerController.isSourceTypeAvailable(source)
-        guard available == true else {
+        guard UIImagePickerController.isSourceTypeAvailable(source) == true else {
             var title = ""
             switch source {
             case .camera:
@@ -40,9 +39,9 @@ class ImagePickerController: UIImagePickerController, UIImagePickerControllerDel
                 title = "无法访问您的相薄"
             }
             SVProgressHUD.showError(withStatus: title)
-            return available
+            return false
         }
-        return available
+        return true
     }
 }
 

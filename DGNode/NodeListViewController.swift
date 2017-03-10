@@ -34,23 +34,24 @@ class NodeListViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "大弓小卡"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewNode))
+        
         let tableView = UITableView(frame: view.bounds, style: .grouped)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableHeaderView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: CGFloat.leastNormalMagnitude)))
         tableView.register(NodeListTableViewCell.self)
         view.addSubview(tableView)
         self.tableView = tableView
-        
-        let headerView = NodeListHeaderView(frame: CGRect(x: 0, y: 0, width: tableView.width, height: 100.0))
-        tableView.tableHeaderView = headerView
-        
-        headerView.createNewNodeButton.reactive.controlEvents(.touchUpInside).observeValues { _ in
-            let viewModel = NodeEditViewModel()
-            viewModel.reloadNodeListSignal.observeValues { _ in
-                self.viewModel.fetchNodes()
-            }
-            Service.default.viewModelService.pushViewModel(viewModel, animated: true)
+    }
+    
+    func createNewNode() {
+        let viewModel = NodeEditViewModel()
+        viewModel.reloadNodeListSignal.observeValues { _ in
+            self.viewModel.fetchNodes()
         }
+        Service.default.viewModelService.pushViewModel(viewModel, animated: true)
     }
 }
 
@@ -69,6 +70,7 @@ extension NodeListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let node = viewModel.nodes.value[indexPath.row]
+        node.newTextLayout()
         return node.height
     }
     
@@ -76,12 +78,32 @@ extension NodeListViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let node = self.viewModel.nodes.value[indexPath.row]
-        let viewModel = NodeDetailViewModel()
+        let viewModel = NodeEditViewModel()
         viewModel.node.value = node
-        viewModel.reloadNodeListSignal.observeValues { _ in
+        viewModel.reloadNodeListSignal.observeValues({ node in
             self.viewModel.fetchNodes()
-        }
+        })
         Service.default.viewModelService.pushViewModel(viewModel, animated: true)
+//        
+//        let node = self.viewModel.nodes.value[indexPath.row]
+//        let viewModel = NodeDetailViewModel()
+//        viewModel.node.value = node
+//        viewModel.reloadNodeListSignal.observeValues { _ in
+//            self.viewModel.fetchNodes()
+//        }
+//        Service.default.viewModelService.pushViewModel(viewModel, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let node = viewModel.nodes.value[indexPath.row]
+            node.delete()
+            viewModel.fetchNodes()
+        }
     }
     
 }

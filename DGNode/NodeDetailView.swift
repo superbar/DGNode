@@ -22,8 +22,14 @@ class NodeDetailView: UIView {
         
         backgroundColor = .white
         
-        headImageView.height = 200.0
         addSubview(headImageView)
+        
+        headImageView.scrollView.isScrollEnabled = false
+        headImageView.addImageButton.isHidden = true
+        headImageView.deleteHeadImageButton.isHidden = true
+        headImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        headImageView.autoSetDimension(.height, toSize: 200)
+        headImageView.setFrame(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200))
         
         nodeTextView.ignoreCommonProperties = true
         addSubview(nodeTextView)
@@ -39,6 +45,7 @@ class NodeDetailView: UIView {
         if let headImage = node.headImage {
             headImageView.setImage(headImage)
             headImageView.isHidden = false
+            headImageView.scrollView.setContentOffset(node.headImageScrollRect.origin, animated: false)
             totalHeight += 200.0
         } else {
             headImageView.isHidden = true
@@ -60,7 +67,6 @@ class NodeDetailView: UIView {
                 nodeTextView.top = 30
             }
             nodeTextView.left = 35.0
-            nodeTextView.right = 35.0
             if let textLayout = textLayout {
                 nodeTextView.width = maxWidth
                 nodeTextView.height = textLayout.textBoundingSize.height

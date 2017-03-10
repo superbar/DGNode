@@ -20,6 +20,6 @@ class NodeListViewModel {
     func fetchNodes() {
 
         guard let nodes: [NodeModel] = NodeModel.objectsWhere(nil, arguments: nil) as? [NodeModel] else { return }
-        self.nodes.value = nodes
+        self.nodes.value = nodes.sorted { $0.nodeID > $1.nodeID }
     }
 }

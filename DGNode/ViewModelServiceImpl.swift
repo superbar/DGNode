@@ -62,17 +62,17 @@ class ViewModelServiceImpl: ViewModelService {
     }
     
     func popToRootViewModel(animated: Bool) {
-        _ = navigationControllerStack.last?.popViewController(animated: animated)
+        _ = navigationControllerStack.last?.popToRootViewController(animated: animated)
     }
     
     func popViewModelAnimated(animated: Bool) {
-        _ = navigationControllerStack.last?.popToRootViewController(animated: animated)
+        _ = navigationControllerStack.last?.popViewController(animated: animated)
     }
     
     func resetRootViewModel<T: ViewModelProtocol>(_ viewModel: T) {
         navigationControllerStack.removeAll()
         var viewController = viewModel.getViewController()
-        if !viewController.isKind(of: UINavigationController.self) && !viewController.isKind(of: TabBarController.self) {
+        if !viewController.isKind(of: UINavigationController.self) && !viewController.isKind(of: UITabBarController.self) {
             viewController = UINavigationController(rootViewController: viewController)
             pushStack(navigationController: viewController as! UINavigationController)
         }

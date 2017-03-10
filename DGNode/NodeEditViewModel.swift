@@ -13,12 +13,17 @@ import Result
 
 class NodeEditViewModel {
     
-    let node: MutableProperty<NodeModel?> = MutableProperty(nil)
+    let node: MutableProperty<NodeModel> = MutableProperty(NodeModel())
+    let hasHeadImage = MutableProperty(false)
     
-    let reloadNodeListSignal: Signal<Void, NoError>
-    let reloadNodeListObserver: Observer<Void, NoError>
+    let reloadNodeListSignal: Signal<NodeModel, NoError>
+    let reloadNodeListObserver: Observer<NodeModel, NoError>
     
     init() {
-        (reloadNodeListSignal, reloadNodeListObserver) = Signal<Void, NoError>.pipe()
+        (reloadNodeListSignal, reloadNodeListObserver) = Signal<NodeModel, NoError>.pipe()
+    }
+    
+    deinit {
+        reloadNodeListObserver.sendCompleted()
     }
 }

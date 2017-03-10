@@ -19,7 +19,6 @@ class NodeDetailViewController: ViewController {
     let buttonsView = NodeDetailActionButtonsView()
     lazy var shareBoardView: ShareBoardView = {
         let shareBoardView = ShareBoardView()
-        shareBoardView.frame.size = CGSize(width: self.view.width, height: 210)
         return shareBoardView
     }()
     
@@ -35,48 +34,47 @@ class NodeDetailViewController: ViewController {
             guard let `self` = self else { return }
             self.nodeDetailView.height = height
             self.buttonsView.top = self.nodeDetailView.bottom
-            self.scrollView.contentSize = CGSize(width: 0, height: height)
+            self.scrollView.contentSize = CGSize(width: 0, height: height + 180)
         }).start()
         scrollView.addSubview(nodeDetailView)
         
-        buttonsView.frame = CGRect(x: 0, y: 0, width: view.width, height: 180)
+        buttonsView.frame = CGRect(x: 0, y: 0, width: view.width, height: 44 + 24)
         scrollView.addSubview(buttonsView)
         
         viewModel.node.producer.on(value: { [weak self] node in
             guard let `self` = self else { return }
-            guard let node = node else { return }
             self.nodeDetailView.setNode(node)
         }).start()
         
-        buttonsView.deleteNodeButton.reactive.controlEvents(.touchUpInside).observeValues { [weak self] _ in
-            guard let `self` = self else { return }
-            let node = self.viewModel.node.value
-            node?.delete()
-            viewModel.reloadNodeListObserver.send(value: ())
-            Service.default.viewModelService.popViewModelAnimated(animated: true)
-        }
+//        buttonsView.deleteNodeButton.reactive.controlEvents(.touchUpInside).observeValues { [weak self] _ in
+//            guard let `self` = self else { return }
+//            let node = self.viewModel.node.value
+//            node.delete()
+//            viewModel.reloadNodeListObserver.send(value: ())
+//            Service.default.viewModelService.popViewModelAnimated(animated: true)
+//        }
         
         buttonsView.modifyNodeButton.reactive.controlEvents(.touchUpInside).observeValues { [weak self] _ in
             guard let `self` = self else { return }
             let node = self.viewModel.node.value
             let viewModel = NodeEditViewModel()
             viewModel.node.value = node
-            viewModel.reloadNodeListSignal.observeValues({ _ in
-                self.viewModel.reloadNodeListObserver.send(value: ())
+            viewModel.reloadNodeListSignal.observeValues({ node in
+                self.viewModel.node.value = node
             })
             Service.default.viewModelService.pushViewModel(viewModel, animated: true)
         }
         
-        buttonsView.getNodeImageButton.reactive.controlEvents(.touchUpInside).observeValues { [weak self] _ in
-            guard let `self` = self else { return }
-            self.shareBoardView.shareImage = self.convertTextToImage()
-            let actionSheet = TBActionSheet()
-            actionSheet.addButton(withTitle: "取消", style: .cancel)
-            actionSheet.sheetWidth = self.view.width
-            actionSheet.rectCornerRadius = 0
-            actionSheet.customView = self.shareBoardView
-            actionSheet.show()
-        }
+//        buttonsView.getNodeImageButton.reactive.controlEvents(.touchUpInside).observeValues { [weak self] _ in
+//            guard let `self` = self else { return }
+//            self.shareBoardView.shareImage = self.convertTextToImage()
+//            let actionSheet = TBActionSheet()
+//            actionSheet.addButton(withTitle: "取消", style: .cancel)
+//            actionSheet.sheetWidth = self.view.width
+//            actionSheet.rectCornerRadius = 0
+//            actionSheet.customView = self.shareBoardView
+//            actionSheet.show()
+//        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -86,6 +84,28 @@ class NodeDetailViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "barbuttonicon_more"), style: .plain, target: self, action: #selector(share))
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.viewModel.reloadNodeListObserver.send(value: ())
+    }
+    
+    func share() {
+        self.shareBoardView.shareImage = self.convertTextToImage()
+        let actionSheet = TBActionSheet()
+        actionSheet.addButton(withTitle: "取消", style: .default)
+        actionSheet.sheetWidth = self.view.width
+        actionSheet.rectCornerRadius = 0
+        actionSheet.customView = self.shareBoardView
+        actionSheet.offsetY = 0
+        actionSheet.buttonHeight = 44
+        actionSheet.backgroundTransparentEnabled = 0
+        actionSheet.blurEffectEnabled = 0
+        actionSheet.ambientColor = .white
+        actionSheet.show()
     }
     
     func convertTextToImage() -> UIImage? {

@@ -19,23 +19,16 @@ class NodeListTableViewCell: UITableViewCell, ReuseableCell {
         
         nodeTextView.ignoreCommonProperties = true
         contentView.addSubview(nodeTextView)
-        
-        nodeTextView.autoPinEdge(toSuperviewEdge: .left, withInset: 12.0)
-        nodeTextView.autoPinEdge(toSuperviewEdge: .right, withInset: 12.0)
-        nodeTextView.autoAlignAxis(toSuperviewAxis: .horizontal)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-    }
-    
+
     func setNode(_ node: NodeModel) {
-        nodeTextView.textLayout = node.textLayout
-        nodeTextView.frame.size = node.textLayout.textBoundingSize
+        guard let textLayout = node.textLayout else { return }
+        nodeTextView.textLayout = textLayout
+        let height = textLayout.textBoundingSize.height
+        nodeTextView.frame = CGRect(x: 12, y: 12, width: UIScreen.main.bounds.width - 24, height: height)
     }
 }
