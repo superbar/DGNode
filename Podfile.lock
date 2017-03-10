@@ -1,5 +1,4 @@
 PODS:
-  - Bugly (2.4.6)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -16,18 +15,16 @@ PODS:
     - UMengUShare/Core
 
 DEPENDENCIES:
-  - Bugly
   - GYDataCenter
   - UMengUShare/Social/QQ
   - UMengUShare/Social/Sina
   - UMengUShare/Social/WeChat
 
 SPEC CHECKSUMS:
-  Bugly: 7756e72c59387b0d490f46e83ab458ae94ee7fba
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   GYDataCenter: 620dc2564589f50d2370a691303e0d7215f7c0af
   UMengUShare: b208ac3bcf1f63d11a100b359990e9d77a0f2085
 
-PODFILE CHECKSUM: 0b4e11d146879b2b561b0722d8a62205453af843
+PODFILE CHECKSUM: 36a3b8dd1f3e29611a8207322857a71a13689509
 
 COCOAPODS: 1.2.0.beta.1

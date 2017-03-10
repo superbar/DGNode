@@ -19,17 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.makeKeyAndVisible()
         
-        Service.default.viewModelService.resetRootViewModel(TabBarViewModel())
+        Service.default.viewModelService.resetRootViewModel(DGTabBarViewModel())
         
-        initBugly()
         initUMSocial()
         
         return true
-    }
-    
-    func initBugly() {
-        let config = BuglyConfig()
-        Bugly.start(withAppId: "", developmentDevice: true, config: config)
     }
     
     func initUMSocial() {

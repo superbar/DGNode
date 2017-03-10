@@ -8,18 +8,64 @@
 
 import UIKit
 import ReactiveSwift
+import ReactiveCocoa
+import Result
 
 class NodeListViewModel {
     
     let nodes: MutableProperty<[NodeModel]> = MutableProperty([])
     
+    let createNewNodeCocoaAction: CocoaAction<UIBarButtonItem>
+    let createNewNodeAction = Action(NodeListViewModel.createNewNodeSignalProducer)
+    let editNodeAction = Action(NodeListViewModel.editNodeSignalProducer)
+    
     init() {
+        createNewNodeCocoaAction = CocoaAction(createNewNodeAction)
         fetchNodes()
+        
+        createNewNodeAction.values.observeValues { [weak self] _ in
+            guard let `self` = self else { return }
+            self.fetchNodes()
+        }
+        
+        editNodeAction.values.observeValues { [weak self] _ in
+            guard let `self` = self else { return }
+            self.fetchNodes()
+        }
     }
     
     func fetchNodes() {
+        guard let nodes: [NodeModel] = NodeModel.objectsWhere("ORDER BY nodeID DESC", arguments: nil) as? [NodeModel] else { return }
+        self.nodes.value = nodes
+    }
+}
 
-        guard let nodes: [NodeModel] = NodeModel.objectsWhere(nil, arguments: nil) as? [NodeModel] else { return }
-        self.nodes.value = nodes.sorted { $0.nodeID > $1.nodeID }
+fileprivate extension NodeListViewModel {
+    
+    class func createNewNodeSignalProducer() -> SignalProducer<Void, NoError> {
+        return SignalProducer { observer, disposable in
+            let viewModel = NodeEditViewModel()
+            viewModel.reloadNodeListSignal.observeValues { isChange in
+                if isChange {
+                    observer.send(value: ())
+                }
+                observer.sendCompleted()
+            }
+            Service.default.viewModelService.pushViewModel(viewModel, animated: true)
+        }
+    }
+    
+    class func editNodeSignalProducer(node: NodeModel) -> SignalProducer<Void, NoError> {
+        return SignalProducer { observer, disposable in
+            let viewModel = NodeEditViewModel()
+            viewModel.node.value = node
+            viewModel.reloadNodeListSignal.observeValues { isChange in
+                if isChange {
+                    observer.send(value: ())
+                }
+                observer.sendCompleted()
+            }
+            Service.default.viewModelService.pushViewModel(viewModel, animated: true)
+        }
     }
 }

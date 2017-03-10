@@ -40,7 +40,7 @@ class NodeModel: DGDataModel {
         let width = UIScreen.main.bounds.width - 24.0
         let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
         let text: NSMutableAttributedString = NSMutableAttributedString(string: self.content)
-        text.yy_setFont(UIFont.systemFont(ofSize: 18.0), range: text.yy_rangeOfAll())
+        text.yy_setFont(UIFont.systemFont(ofSize: 14.0), range: text.yy_rangeOfAll())
         text.yy_setColor(UIColor(red: 143/255, green: 143/255, blue: 148/255, alpha: 1.0), range: text.yy_rangeOfAll())
         let textContainer = YYTextContainer(size: size)
         textContainer.maximumNumberOfRows = 4

@@ -11,7 +11,7 @@ import ReactiveSwift
 import ReactiveCocoa
 import Result
 
-class NodeListViewController: ViewController {
+class NodeListViewController: DGViewController {
     
     let viewModel: NodeListViewModel
     
@@ -35,7 +35,7 @@ class NodeListViewController: ViewController {
         super.viewDidLoad()
         
         navigationItem.title = "大弓小卡"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewNode))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, pressed: viewModel.createNewNodeCocoaAction)
         
         let tableView = UITableView(frame: view.bounds, style: .grouped)
         tableView.delegate = self
@@ -44,14 +44,6 @@ class NodeListViewController: ViewController {
         tableView.register(NodeListTableViewCell.self)
         view.addSubview(tableView)
         self.tableView = tableView
-    }
-    
-    func createNewNode() {
-        let viewModel = NodeEditViewModel()
-        viewModel.reloadNodeListSignal.observeValues { _ in
-            self.viewModel.fetchNodes()
-        }
-        Service.default.viewModelService.pushViewModel(viewModel, animated: true)
     }
 }
 
@@ -78,20 +70,7 @@ extension NodeListViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let node = self.viewModel.nodes.value[indexPath.row]
-        let viewModel = NodeEditViewModel()
-        viewModel.node.value = node
-        viewModel.reloadNodeListSignal.observeValues({ node in
-            self.viewModel.fetchNodes()
-        })
-        Service.default.viewModelService.pushViewModel(viewModel, animated: true)
-//        
-//        let node = self.viewModel.nodes.value[indexPath.row]
-//        let viewModel = NodeDetailViewModel()
-//        viewModel.node.value = node
-//        viewModel.reloadNodeListSignal.observeValues { _ in
-//            self.viewModel.fetchNodes()
-//        }
-//        Service.default.viewModelService.pushViewModel(viewModel, animated: true)
+        viewModel.editNodeAction.apply(node).start()
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
@@ -105,7 +84,6 @@ extension NodeListViewController: UITableViewDelegate, UITableViewDataSource {
             viewModel.fetchNodes()
         }
     }
-    
 }
 
 extension NodeListViewModel: ViewModelProtocol {
@@ -114,3 +92,4 @@ extension NodeListViewModel: ViewModelProtocol {
         return NodeListViewController(viewModel: self)
     }
 }
+

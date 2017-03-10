@@ -1,5 +1,5 @@
 //
-//  ImagePickerViewModel.swift
+//  DGImagePickerViewModel.swift
 //  DGNode
 //
 //  Created by DSKcpp on 2017/3/9.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImagePickerViewModel {
+class DGImagePickerViewModel {
     
     let exec:((UIImage?, NSURL?) -> ())
     

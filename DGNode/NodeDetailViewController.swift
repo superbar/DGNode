@@ -10,7 +10,7 @@ import UIKit
 import ReactiveSwift
 import TBActionSheetKit
 
-class NodeDetailViewController: ViewController {
+class NodeDetailViewController: DGViewController {
 
     let viewModel: NodeDetailViewModel
     
@@ -60,7 +60,7 @@ class NodeDetailViewController: ViewController {
             let viewModel = NodeEditViewModel()
             viewModel.node.value = node
             viewModel.reloadNodeListSignal.observeValues({ node in
-                self.viewModel.node.value = node
+//                self.viewModel.node.value = node
             })
             Service.default.viewModelService.pushViewModel(viewModel, animated: true)
         }

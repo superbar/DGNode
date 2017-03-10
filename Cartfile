@@ -1,9 +1,6 @@
-github "Alamofire/Alamofire" ~> 4.4
 github "thii/SwiftHEXColors"
 github "PureLayout/PureLayout"
-github "rs/SDWebImage"
 github "ReactiveCocoa/ReactiveCocoa" ~> 5.0
 github "ibireme/YYText"
 github "SVProgressHUD/SVProgressHUD"
 github "yulingtianxia/TBActionSheet"
-github "alibaba/HandyJSON" ~> 1.6.0

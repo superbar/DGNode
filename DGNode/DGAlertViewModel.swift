@@ -1,5 +1,5 @@
 //
-//  AlertViewModel.swift
+//  DGAlertViewModel.swift
 //  DGNode
 //
 //  Created by DSKcpp on 2017/3/9.
@@ -9,7 +9,7 @@
 import UIKit
 import ReactiveSwift
 
-class AlertViewModel {
+class DGAlertViewModel {
 
     let title = MutableProperty<String?>(nil)
     let message = MutableProperty<String?>(nil)

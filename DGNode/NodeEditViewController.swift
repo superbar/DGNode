@@ -13,15 +13,16 @@ import ReactiveCocoa
 import ReactiveSwift
 import Result
 import TBActionSheetKit
+import Photos
+import SVProgressHUD
 
-class NodeEditViewController: ViewController, YYTextViewDelegate, YYTextKeyboardObserver {
+class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboardObserver {
 
     let viewModel: NodeEditViewModel
     
     let nodeBackgroundView = DGScrollView()
     let textView = YYTextView()
 //    let headImageView = NodeHeadImageView()
-//    let toolBar = NodeToolBarView()
     lazy var shareBoardView: ShareBoardView = {
         let shareBoardView = ShareBoardView()
         shareBoardView.frame.size = CGSize(width: self.view.width, height: 210)
@@ -34,6 +35,7 @@ class NodeEditViewController: ViewController, YYTextViewDelegate, YYTextKeyboard
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
+        nodeBackgroundView.isScrollEnabled = false
         nodeBackgroundView.frame = CGRect(x: 0, y: 64, width: view.width, height: view.height - 64)
         nodeBackgroundView.backgroundColor = .white
         nodeBackgroundView.delegate = self
@@ -75,7 +77,6 @@ class NodeEditViewController: ViewController, YYTextViewDelegate, YYTextKeyboard
         textView.placeholderText = "想要分享什么？"
         textView.placeholderFont = UIFont.systemFont(ofSize: 14.0)
         textView.textContainerInset = UIEdgeInsets(top: 30, left: 35, bottom: 30, right: 35)
-        textView.isScrollEnabled = false
         textView.font = UIFont.systemFont(ofSize: 14.0)
         textView.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         textView.delegate = self
@@ -83,18 +84,22 @@ class NodeEditViewController: ViewController, YYTextViewDelegate, YYTextKeyboard
         textView.allowsCopyAttributedString = false
         nodeBackgroundView.contentView.addSubview(textView)
         
-        textView.autoPinEdge(toSuperviewEdge: .leading)
-        textView.autoPinEdge(toSuperviewEdge: .trailing)
-        textView.autoPinEdge(toSuperviewEdge: .top)
+        textView.autoPinEdgesToSuperviewEdges()
         
         viewModel.node.producer.on(value: { [weak self] node in
             guard let `self` = self else { return }
             self.viewModel.hasHeadImage.value = node.headImage != nil
             self.textView.text = node.content
-            self.textViewHeightConstraint?.autoRemove()
-            let height: CGFloat = max(300, self.textView.textLayout?.textBoundingSize.height ?? 0)
-            self.textViewHeightConstraint = self.textView.autoSetDimension(.height, toSize: height)
+//            self.textViewHeightConstraint?.autoRemove()
+//            let height: CGFloat = max(300, self.textView.textLayout?.textBoundingSize.height ?? 0)
+//            self.textViewHeightConstraint = self.textView.autoSetDimension(.height, toSize: height)
         }).start()
+        
+        
+//        viewModel.addHeadImageAction.values.observeValues { [weak self] image in
+//            guard let `self` = self else { return }
+//            guard let image = image else { return }
+//        }
         
         YYTextKeyboardManager.default()?.add(self)
     }
@@ -111,7 +116,9 @@ class NodeEditViewController: ViewController, YYTextViewDelegate, YYTextKeyboard
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.lightGray
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "barbuttonicon_more"), style: .plain, target: self, action: #selector(showShareBoard))
+        let moreItem = UIBarButtonItem(image: #imageLiteral(resourceName: "barbuttonicon_more"), style: .plain, target: self, action: #selector(showShareBoard))
+        let getNodeImageItem = UIBarButtonItem(barButtonSystemItem: .action, pressed: viewModel.addHeadImageCocoaAction)
+        navigationItem.rightBarButtonItems = [moreItem, getNodeImageItem]
         automaticallyAdjustsScrollViewInsets = false
         
         
@@ -131,9 +138,11 @@ class NodeEditViewController: ViewController, YYTextViewDelegate, YYTextKeyboard
             node.content = text
         }
 //        node.headImageScrollRect.origin = headImageView.scrollView.contentOffset
-        if node.content.characters.count > 0 {
+        if !node.content.isEmpty {
             node.save()
-            viewModel.reloadNodeListObserver.send(value: node)
+            viewModel.reloadNodeListObserver.send(value: true)
+        } else {
+            viewModel.reloadNodeListObserver.send(value: false)
         }
     }
     
@@ -147,20 +156,18 @@ class NodeEditViewController: ViewController, YYTextViewDelegate, YYTextKeyboard
 //        let origOffset = nodeBackgroundView.contentOffset
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView === nodeBackgroundView {
-            return
-        }
-        let height: CGFloat = max(300, textView.textLayout?.textBoundingSize.height ?? 0)
-        textViewHeightConstraint?.autoRemove()
-        textViewHeightConstraint = textView.autoSetDimension(.height, toSize: height)
-        nodeBackgroundView.contentSize = CGSize(width: 0, height: height + 200)
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView === nodeBackgroundView {
+//            return
+//        }
+//        let height: CGFloat = max(300, textView.textLayout?.textBoundingSize.height ?? 0)
+//        textViewHeightConstraint?.autoRemove()
+//        textViewHeightConstraint = textView.autoSetDimension(.height, toSize: height)
+//        nodeBackgroundView.contentSize = CGSize(width: 0, height: height + 200)
+//    }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if scrollView === nodeBackgroundView {
-            textView.resignFirstResponder()
-        }
+        textView.resignFirstResponder()
     }
     
     func showShareBoard() {
@@ -195,24 +202,12 @@ class NodeEditViewController: ViewController, YYTextViewDelegate, YYTextKeyboard
             let textView: UIView = self.textView.value(forKey: "containerView") as! UIView
             let size = CGSize.init(width: view.width, height: textView.height)
             UIGraphicsBeginImageContextWithOptions(size, false, scale)
-            view.drawHierarchy(in: CGRect.init(x: 0, y: 0, width: view.width, height: view.height), afterScreenUpdates: false)
+            view.drawHierarchy(in: CGRect(x: 0, y: 0, width: view.width, height: view.height), afterScreenUpdates: false)
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             return image
         }
     }
-    
-    func takeImage(source: UIImagePickerControllerSourceType) {
-        guard ImagePickerController.available(source: source) else { return }
-        let viewModel = ImagePickerViewModel(source: source, exec: { (image, url) in
-            guard let image = image else { return }
-//            self.headImageView.setImage(image)
-            self.viewModel.hasHeadImage.value = true
-            self.viewModel.node.value.headImage = image
-        })
-        Service.default.viewModelService.presentViewModel(viewModel, animated: true, completion: nil)
-    }
-    
 }
 
 extension NodeEditViewModel: ViewModelProtocol {

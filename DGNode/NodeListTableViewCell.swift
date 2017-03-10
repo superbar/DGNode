@@ -29,6 +29,7 @@ class NodeListTableViewCell: UITableViewCell, ReuseableCell {
         guard let textLayout = node.textLayout else { return }
         nodeTextView.textLayout = textLayout
         let height = textLayout.textBoundingSize.height
-        nodeTextView.frame = CGRect(x: 12, y: 12, width: UIScreen.main.bounds.width - 24, height: height)
+        nodeTextView.frame = CGRect(x: 12, y: 0, width: UIScreen.main.bounds.width - 24, height: height)
+        nodeTextView.center.y = contentView.center.y
     }
 }

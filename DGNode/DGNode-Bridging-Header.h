@@ -3,6 +3,5 @@
 //
 
 
-#import <Bugly/Bugly.h>
 #import <UMSocialCore/UMSocialCore.h>
 #import <GYDataCenter/GYDataCenter.h>

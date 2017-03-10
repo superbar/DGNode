@@ -1,5 +1,5 @@
 //
-//  ImagePickerController.swift
+//  DGImagePickerController.swift
 //  DGNode
 //
 //  Created by DSKcpp on 2017/3/9.
@@ -9,9 +9,9 @@
 import UIKit
 import SVProgressHUD
 
-class ImagePickerController: UIImagePickerController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class DGImagePickerController: UIImagePickerController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    var viewModel: ImagePickerViewModel?
+    var viewModel: DGImagePickerViewModel?
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let img = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -45,10 +45,10 @@ class ImagePickerController: UIImagePickerController, UIImagePickerControllerDel
     }
 }
 
-extension ImagePickerViewModel: ViewModelProtocol {
+extension DGImagePickerViewModel: ViewModelProtocol {
     
     func getViewController() -> UIViewController {
-        let vc = ImagePickerController()
+        let vc = DGImagePickerController()
         vc.viewModel = self
         vc.sourceType = self.source
         if let mediaTypes = self.mediaTypes {

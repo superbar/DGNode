@@ -1,5 +1,5 @@
 //
-//  TabBarViewModel.swift
+//  DGTabBarViewModel.swift
 //  DGNode
 //
 //  Created by DSKcpp on 2017/3/9.
@@ -8,6 +8,6 @@
 
 import UIKit
 
-class TabBarViewModel {
+class DGTabBarViewModel {
 
 }

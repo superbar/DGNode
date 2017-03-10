@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  DGViewController.swift
 //  DGNode
 //
 //  Created by DSKcpp on 2017/3/8.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class DGViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

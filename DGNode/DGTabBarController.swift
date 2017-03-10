@@ -1,5 +1,5 @@
 //
-//  TabBarController.swift
+//  DGTabBarController.swift
 //  DGNode
 //
 //  Created by DSKcpp on 2017/3/9.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class TabBarController: UITabBarController {
+class DGTabBarController: UITabBarController {
 
-    let viewModel: TabBarViewModel
-    init(viewModel: TabBarViewModel) {
+    let viewModel: DGTabBarViewModel
+    init(viewModel: DGTabBarViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -33,9 +33,9 @@ class TabBarController: UITabBarController {
 }
 
 
-extension TabBarViewModel: ViewModelProtocol {
+extension DGTabBarViewModel: ViewModelProtocol {
     
     func getViewController() -> UIViewController {
-        return TabBarController(viewModel: self)
+        return DGTabBarController(viewModel: self)
     }
 }

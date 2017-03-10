@@ -128,7 +128,7 @@ class ShareBoardView: UIView {
     }
     
     func saveImageToDisk() {
-        guard ImagePickerController.available(source: .savedPhotosAlbum) else { return }
+        guard DGImagePickerController.available(source: .savedPhotosAlbum) else { return }
         
         PHPhotoLibrary.shared().performChanges({ 
             guard let image = self.shareImage else { return }

@@ -1,5 +1,5 @@
 //
-//  AlertController.swift
+//  DGAlertController.swift
 //  DGNode
 //
 //  Created by DSKcpp on 2017/3/9.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class AlertController: UIAlertController {
+class DGAlertController: UIAlertController {
 
 }
 
-extension AlertViewModel: ViewModelProtocol {
+extension DGAlertViewModel: ViewModelProtocol {
     
     func getViewController() -> UIViewController {
         let alert = UIAlertController(title: title.value, message: message.value, preferredStyle: preferredStyle.value)
