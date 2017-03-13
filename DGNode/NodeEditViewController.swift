@@ -127,8 +127,10 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         
         headImageView.reactive.isHidden <~ viewModel.hasHeadImage.map({ [weak self] has in
             guard let `self` = self else { return !has }
-            self.headImageHeightConstraint?.autoRemove()
-            self.headImageHeightConstraint = self.headImageView.autoSetDimension(.height, toSize: has ? 200.0 : 0.0)
+            let height: CGFloat = has ? 200.0 : 0
+            self.headImageView.frame.size.height = height
+            self.textView.top = height
+            self.nodeBackgroundView.contentSize = CGSize.init(width: 0, height: self.textView.height + height)
             return !has
         })
         
