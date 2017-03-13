@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let socialManager = UMSocialManager.default()
         socialManager?.umSocialAppkey = "5861e5daf5ade41326001eab"
         socialManager?.setPlaform(.sina, appKey: "3921700954", appSecret: "04b48b094faeb16683c32669824ebdad", redirectURL: "")
-        socialManager?.setPlaform(.wechatSession, appKey: "wxdc1e388c3822c80b", appSecret: "3baf1193c85774b3fd9d18447d76cab0", redirectURL: "")
+        socialManager?.setPlaform(.wechatSession, appKey: "wxd6dc07784f2c6722", appSecret: "6a4daf701bfe0bc1f1209580c01a1945", redirectURL: "")
         socialManager?.setPlaform(.QQ, appKey: "1105821097", appSecret: nil, redirectURL: "")
     }
 

@@ -10,6 +10,9 @@ import UIKit
 import PureLayout
 import Photos
 import SVProgressHUD
+import ReactiveCocoa
+import ReactiveSwift
+import Result
 
 class ShareBoardView: UIView {
 
@@ -19,8 +22,16 @@ class ShareBoardView: UIView {
     var shareImage: UIImage?
     let line = UIView()
     
+    let shareResultSignal: Signal<Bool, NoError>
+    private let shareResultObserver: Observer<Bool, NoError>
+    
+    let saveImageSignal: Signal<Bool, NoError>
+    private let saveImageObserver: Observer<Bool, NoError>
+    
+    
     override init(frame: CGRect) {
-        
+        (shareResultSignal, shareResultObserver) = Signal<Bool, NoError>.pipe()
+        (saveImageSignal, saveImageObserver) = Signal<Bool, NoError>.pipe()
         shareItem =
             [ShareBoardItem(title: "微信好友", image: #imageLiteral(resourceName: "share_wechat"), plaform: .wechatSession),
              ShareBoardItem(title: "朋友圈", image: #imageLiteral(resourceName: "shareToWCSession"), plaform: .wechatTimeLine)]
@@ -76,6 +87,11 @@ class ShareBoardView: UIView {
         addSubview(line)
     }
     
+    deinit {
+        shareResultObserver.sendCompleted()
+        saveImageObserver.sendCompleted()
+    }
+    
     func setOtherActions(actions: [ShareBoardItem]) {
         
         let btnWidth: CGFloat = 60.0
@@ -123,9 +139,7 @@ class ShareBoardView: UIView {
         msgObj.shareObject = shareObject
         
         UMSocialManager.default().share(to: platformType, messageObject: msgObj, currentViewController: self) { (data, error) in
-            if error == nil {
-                SVProgressHUD.showSuccess(withStatus: "分享成功")
-            }
+            self.shareResultObserver.send(value: error == nil)
         }
     }
     
@@ -136,11 +150,7 @@ class ShareBoardView: UIView {
             guard let image = self.shareImage else { return }
             PHAssetChangeRequest.creationRequestForAsset(from: image)
         }) { (success, error) in
-            if success {
-                SVProgressHUD.showSuccess(withStatus: "保存成功")
-            } else {
-                SVProgressHUD.showError(withStatus: "保存失败")
-            }
+            self.saveImageObserver.send(value: success)
         }
     }
   

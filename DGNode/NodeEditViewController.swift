@@ -28,6 +28,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         shareBoardView.frame.size = CGSize(width: self.view.width, height: 210)
         return shareBoardView
     }()
+    var actionSheet: TBActionSheet?
     
     var textViewHeightConstraint: NSLayoutConstraint?
     var headImageHeightConstraint: NSLayoutConstraint?
@@ -139,6 +140,33 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         headImageView.imageContainerView.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
         headImageView.deleteHeadImageButton.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
         
+        shareBoardView.shareResultSignal.observe(on: UIScheduler()).observeValues { [weak self] success in
+            guard let `self` = self else { return }
+            self.actionSheet?.close()
+            self.actionSheet = nil
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                if success {
+                    SVProgressHUD.showSuccess(withStatus: "分享成功")
+                } else {
+                    SVProgressHUD.showError(withStatus: "分享失败")
+                }
+            }
+        }
+        
+        shareBoardView.saveImageSignal.observe(on: UIScheduler()).observeValues { [weak self] success in
+            guard let `self` = self else { return }
+            self.actionSheet?.close()
+            self.actionSheet = nil
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                if success {
+                    SVProgressHUD.showSuccess(withStatus: "保存成功")
+                } else {
+                    SVProgressHUD.showError(withStatus: "保存失败")
+                }
+            }
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             let attr = self.textView.attributedText
             if attr?.string.isEmpty == true {
@@ -224,6 +252,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         actionSheet.blurEffectEnabled = 0
         actionSheet.ambientColor = .white
         actionSheet.show()
+        self.actionSheet = actionSheet
     }
 
     func convertTextToImage() -> UIImage? {
