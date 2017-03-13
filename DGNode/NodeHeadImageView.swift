@@ -40,14 +40,11 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
         
         imageContainerView.addSubview(imageView)
         
-        deleteHeadImageButton.setTitle("X", for: .normal)
-        deleteHeadImageButton.setTitleColor(.black, for: .normal)
-        deleteHeadImageButton.layer.borderColor = UIColor.black.cgColor
-        deleteHeadImageButton.layer.borderWidth = 1.0
-        deleteHeadImageButton.layer.cornerRadius = 5.0
+        deleteHeadImageButton.tintColor = .black
+        deleteHeadImageButton.setBackgroundImage(#imageLiteral(resourceName: "close"), for: .normal)
         addSubview(deleteHeadImageButton)
         
-        deleteHeadImageButton.frame.size = CGSize(width: 35, height: 35)
+        deleteHeadImageButton.frame.size = CGSize(width: 20, height: 20)
         deleteHeadImageButton.right = frame.width - 12
         deleteHeadImageButton.bottom = frame.height - 12
         

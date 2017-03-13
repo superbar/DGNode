@@ -22,16 +22,13 @@ class ShareBoardView: UIView {
     var shareImage: UIImage?
     let line = UIView()
     
-    let shareResultSignal: Signal<Bool, NoError>
-    private let shareResultObserver: Observer<Bool, NoError>
-    
-    let saveImageSignal: Signal<Bool, NoError>
-    private let saveImageObserver: Observer<Bool, NoError>
+    let closeShareBoardSignal: Signal<Void, NoError>
+    private let closeShareBoardObserver: Observer<Void, NoError>
     
     
     override init(frame: CGRect) {
-        (shareResultSignal, shareResultObserver) = Signal<Bool, NoError>.pipe()
-        (saveImageSignal, saveImageObserver) = Signal<Bool, NoError>.pipe()
+        (closeShareBoardSignal, closeShareBoardObserver) = Signal<Void, NoError>.pipe()
+
         shareItem =
             [ShareBoardItem(title: "微信好友", image: #imageLiteral(resourceName: "share_wechat"), plaform: .wechatSession),
              ShareBoardItem(title: "朋友圈", image: #imageLiteral(resourceName: "shareToWCSession"), plaform: .wechatTimeLine)]
@@ -88,8 +85,7 @@ class ShareBoardView: UIView {
     }
     
     deinit {
-        shareResultObserver.sendCompleted()
-        saveImageObserver.sendCompleted()
+        closeShareBoardObserver.sendCompleted()
     }
     
     func setOtherActions(actions: [ShareBoardItem]) {
@@ -138,19 +134,31 @@ class ShareBoardView: UIView {
         
         msgObj.shareObject = shareObject
         
+        closeShareBoardObserver.send(value: ())
         UMSocialManager.default().share(to: platformType, messageObject: msgObj, currentViewController: self) { (data, error) in
-            self.shareResultObserver.send(value: error == nil)
+            if error == nil {
+                SVProgressHUD.showSuccess(withStatus: "分享成功")
+            } else {
+                SVProgressHUD.showError(withStatus: "分享失败")
+            }
         }
     }
     
     func saveImageToDisk() {
         guard DGImagePickerController.available(source: .savedPhotosAlbum) else { return }
         
+        closeShareBoardObserver.send(value: ())
         PHPhotoLibrary.shared().performChanges({ 
             guard let image = self.shareImage else { return }
             PHAssetChangeRequest.creationRequestForAsset(from: image)
         }) { (success, error) in
-            self.saveImageObserver.send(value: success)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                if success {
+                    SVProgressHUD.showSuccess(withStatus: "保存成功")
+                } else {
+                    SVProgressHUD.showError(withStatus: "保存失败")
+                }
+            }
         }
     }
   

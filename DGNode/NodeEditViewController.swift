@@ -104,6 +104,8 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
                 if let textLayout = YYTextLayout(containerSize: size, text: text) {
                     textHeight = textLayout.textBoundingSize.height + 60
                 }
+            } else {
+                self.textView.becomeFirstResponder()
             }
             var headImageHeight: CGFloat = 0
             if let image = node.headImage {
@@ -140,38 +142,10 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         headImageView.imageContainerView.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
         headImageView.deleteHeadImageButton.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
         
-        shareBoardView.shareResultSignal.observe(on: UIScheduler()).observeValues { [weak self] success in
+        shareBoardView.closeShareBoardSignal.observeValues { [weak self] _ in
             guard let `self` = self else { return }
             self.actionSheet?.close()
             self.actionSheet = nil
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                if success {
-                    SVProgressHUD.showSuccess(withStatus: "分享成功")
-                } else {
-                    SVProgressHUD.showError(withStatus: "分享失败")
-                }
-            }
-        }
-        
-        shareBoardView.saveImageSignal.observe(on: UIScheduler()).observeValues { [weak self] success in
-            guard let `self` = self else { return }
-            self.actionSheet?.close()
-            self.actionSheet = nil
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                if success {
-                    SVProgressHUD.showSuccess(withStatus: "保存成功")
-                } else {
-                    SVProgressHUD.showError(withStatus: "保存失败")
-                }
-            }
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            let attr = self.textView.attributedText
-            if attr?.string.isEmpty == true {
-                self.textView.becomeFirstResponder()
-            }
         }
     }
     
@@ -270,7 +244,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
             let textView: UIView = self.textView.value(forKey: "containerView") as! UIView
             let size = CGSize(width: view.width, height: headImageView.height + textView.height)
             UIGraphicsBeginImageContextWithOptions(size, false, scale)
-            view.drawHierarchy(in: CGRect.init(x: 0, y: -64, width: view.width, height: view.height), afterScreenUpdates: false)
+            view.drawHierarchy(in: CGRect(x: 0, y: -64, width: view.width, height: view.height), afterScreenUpdates: false)
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             return image
