@@ -11,7 +11,7 @@ import PureLayout
 
 class NodeHeadImageView: UIView, UIScrollViewDelegate {
 
-    let scrollView = DGScrollView()
+    let scrollView = UIScrollView()
     let imageContainerView = UIView()
     let imageView = UIImageView()
     let deleteHeadImageButton = UIButton()
@@ -34,7 +34,7 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
         addSubview(scrollView)
         
         imageContainerView.clipsToBounds = true
-        scrollView.contentView.addSubview(imageContainerView)
+        scrollView.addSubview(imageContainerView)
         
         imageContainerView.addSubview(imageView)
         
@@ -44,10 +44,10 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
         deleteHeadImageButton.layer.borderWidth = 1.0
         deleteHeadImageButton.layer.cornerRadius = 5.0
         addSubview(deleteHeadImageButton)
-
-        deleteHeadImageButton.autoSetDimensions(to: CGSize(width: 40, height: 40))
-        deleteHeadImageButton.autoPinEdge(toSuperviewEdge: .right, withInset: 12)
-        deleteHeadImageButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 12)
+        
+        deleteHeadImageButton.frame.size = CGSize(width: 35, height: 35)
+        deleteHeadImageButton.right = self.frame.width - 12
+        deleteHeadImageButton.bottom = self.frame.height - 12
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -101,5 +101,13 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
         let offsetX = (frame.width > size.width) ? (frame.width - size.width) * 0.5 : 0.0;
         let offsetY = (frame.height > size.height) ? (frame.height - size.height) * 0.5 : 0.0;
         imageContainerView.center = CGPoint(x: size.width * 0.5 + offsetX, y: size.height * 0.5 + offsetY);
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("1")
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        return super.hitTest(point, with: event)
     }
 }

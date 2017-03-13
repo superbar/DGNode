@@ -15,7 +15,6 @@
 		86544C681E763C820018679A /* NodeEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86544C671E763C820018679A /* NodeEditTableViewCell.swift */; };
 		8675B45D1E716B6E0011CD19 /* DGAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8675B45C1E716B6E0011CD19 /* DGAlertController.swift */; };
 		8675B45F1E716B970011CD19 /* DGAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8675B45E1E716B970011CD19 /* DGAlertViewModel.swift */; };
-		8675B4621E71AEE80011CD19 /* DGScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8675B4611E71AEE80011CD19 /* DGScrollView.swift */; };
 		8675B4641E71BCE90011CD19 /* NodeToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8675B4631E71BCE80011CD19 /* NodeToolBarView.swift */; };
 		867844001E70432900177660 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867843FF1E70432900177660 /* AppDelegate.swift */; };
 		867844021E70432900177660 /* DGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867844011E70432900177660 /* DGViewController.swift */; };
@@ -68,7 +67,6 @@
 		86544C671E763C820018679A /* NodeEditTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeEditTableViewCell.swift; sourceTree = "<group>"; };
 		8675B45C1E716B6E0011CD19 /* DGAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGAlertController.swift; sourceTree = "<group>"; };
 		8675B45E1E716B970011CD19 /* DGAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGAlertViewModel.swift; sourceTree = "<group>"; };
-		8675B4611E71AEE80011CD19 /* DGScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGScrollView.swift; sourceTree = "<group>"; };
 		8675B4631E71BCE80011CD19 /* NodeToolBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeToolBarView.swift; sourceTree = "<group>"; };
 		867843FC1E70432900177660 /* DGNode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DGNode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		867843FF1E70432900177660 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -175,7 +173,6 @@
 		8675B4601E71AED50011CD19 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				8675B4611E71AEE80011CD19 /* DGScrollView.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -514,7 +511,6 @@
 				867844351E71045F00177660 /* Service.swift in Sources */,
 				867844541E710AC500177660 /* NodeListTableViewCell.swift in Sources */,
 				867844561E710C0D00177660 /* DGTabBarViewModel.swift in Sources */,
-				8675B4621E71AEE80011CD19 /* DGScrollView.swift in Sources */,
 				86B861271E714D6E00BC22C6 /* NodeEditViewModel.swift in Sources */,
 				8675B4641E71BCE90011CD19 /* NodeToolBarView.swift in Sources */,
 				86544C681E763C820018679A /* NodeEditTableViewCell.swift in Sources */,

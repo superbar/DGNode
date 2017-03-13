@@ -16,12 +16,11 @@ import TBActionSheetKit
 import SVProgressHUD
 import SwiftHEXColors
 
-class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboardObserver {
+class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboardObserver, UIScrollViewDelegate {
 
     let viewModel: NodeEditViewModel
     
-    let tableView: UITableView
-    let nodeBackgroundView = DGScrollView()
+    let nodeBackgroundView = UIScrollView()
     let textView = NodeTextView()
     let headImageView = NodeHeadImageView()
     lazy var shareBoardView: ShareBoardView = {
@@ -32,10 +31,11 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
     
     var textViewHeightConstraint: NSLayoutConstraint?
     var headImageHeightConstraint: NSLayoutConstraint?
+    var keyboardTop: CGFloat = 0
+    var keyboardHeight: CGFloat = 0
     
     init(viewModel: NodeEditViewModel) {
         self.viewModel = viewModel
-        tableView = UITableView(frame: .zero, style: .grouped)
         super.init(nibName: nil, bundle: nil)
         
         YYTextKeyboardManager.default()?.add(self)
@@ -51,25 +51,17 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(NodeEditTableViewCell.self)
-        tableView.register(NodeHeadImageTableViewCell.self)
-        view.addSubview(tableView)
         
         let moreItem = UIBarButtonItem(image: #imageLiteral(resourceName: "barbuttonicon_more"), style: .plain, target: self, action: #selector(showShareBoard))
         let getNodeImageItem = UIBarButtonItem(barButtonSystemItem: .action, pressed: viewModel.addHeadImageCocoaAction)
         navigationItem.rightBarButtonItems = [moreItem, getNodeImageItem]
-        automaticallyAdjustsScrollViewInsets = false
         
-        nodeBackgroundView.frame = CGRect(x: 0, y: 64, width: view.width, height: view.height - 64)
+        nodeBackgroundView.frame = view.bounds
         nodeBackgroundView.backgroundColor = .white
         nodeBackgroundView.delegate = self
         view.addSubview(nodeBackgroundView)
         
-        nodeBackgroundView.contentView.addSubview(headImageView)
+        nodeBackgroundView.addSubview(headImageView)
         
         textView.placeholderText = "想要分享什么？"
         textView.placeholderFont = UIFont.systemFont(ofSize: 14.0)
@@ -80,13 +72,10 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         textView.isScrollEnabled = false
         textView.textParser = NodeTextParser()
         textView.allowsCopyAttributedString = false
-        nodeBackgroundView.contentView.addSubview(textView)
+        nodeBackgroundView.addSubview(textView)
         
-        headImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        textView.autoPinEdge(toSuperviewEdge: .left)
-        textView.autoPinEdge(toSuperviewEdge: .right)
-        textView.autoPinEdge(.top, to: .bottom, of: headImageView)
-        textViewHeightConstraint = textView.autoSetDimension(.height, toSize: 500)
+        headImageView.frame = CGRect(x: 0, y: 0, width: view.width, height: 200)
+        textView.frame = CGRect(x: 0, y: 0, width: view.width, height: 500)
         
         viewModel.addHeadImageAction.values.observeValues { [weak self] image  in
             guard let `self` = self else { return }
@@ -108,7 +97,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
                 text.yy_setColor(UIColor(hexString: "555555"), range: text.yy_rangeOfAll())
                 text.yy_setLineSpacing(8.0, range: text.yy_rangeOfAll())
                 text.yy_setKern(1.0, range: text.yy_rangeOfAll())
-                self.textView.attributedText = text
+                self.textView.text = node.content
                 
                 let size = CGSize(width: self.view.width - 70, height: CGFloat.greatestFiniteMagnitude)
                 if let textLayout = YYTextLayout(containerSize: size, text: text) {
@@ -122,9 +111,11 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
                 headImageHeight = 200
             }
             if textHeight > 0 {
-                self.textViewHeightConstraint?.autoRemove()
-                self.textViewHeightConstraint = self.textView.autoSetDimension(.height, toSize: textHeight)
+                self.textView.top = headImageHeight
+                self.textView.height = textHeight
                 self.nodeBackgroundView.contentSize = CGSize(width: 0, height: textHeight + headImageHeight)
+                self.nodeBackgroundView.contentOffset = CGPoint(x: 0, y: 0)
+
             }
         }).start()
         
@@ -169,21 +160,42 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
     }
     
     func keyboardChanged(with transition: YYTextKeyboardTransition) {
-        nodeBackgroundView.contentOffset = CGPoint(x: 0, y: 200)
+        let y = transition.toFrame.minY
+        keyboardTop = y
+        keyboardHeight = transition.toFrame.height
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            let selectionView: UIView = self.textView.value(forKeyPath: "selectionView.caretView") as! UIView
+            let bottom = selectionView.bottom + (self.viewModel.hasHeadImage.value ? 200.0 : 0) + 64 + 35
+            if y < bottom {
+                var ry = bottom - y - 29
+                if ry > y {
+                    ry = y - 29
+                }
+                UIView.animate(withDuration: transition.animationDuration, delay: 0, options: [transition.animationOption, .beginFromCurrentState], animations: {
+                    self.nodeBackgroundView.contentOffset = CGPoint(x: 0, y: ry)
+                }, completion: nil)
+            }
+        }
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         textView.resignFirstResponder()
+//        nodeBackgroundView.contentOffset = CGPoint(x: 0, y: 0)
     }
     
     func textViewDidChange(_ textView: YYTextView) {
         let textHeight = textView.textLayout?.textBoundingSize.height ?? 0.0
         let headImageHeight: CGFloat = viewModel.hasHeadImage.value ? 200.0 : 0
         guard textHeight > 0 else { return }
-        textViewHeightConstraint?.autoRemove()
-        textViewHeightConstraint = textView.autoSetDimension(.height, toSize: textHeight)
+        self.textView.frame.size.height = textHeight
         nodeBackgroundView.contentSize = CGSize(width: 0, height: textHeight + headImageHeight)
-        nodeBackgroundView.contentOffset = CGPoint(x: 0, y: 200)
+//        let selectionView: UIView = self.textView.value(forKeyPath: "selectionView.caretView") as! UIView
+//        let bottom = selectionView.bottom + (self.viewModel.hasHeadImage.value ? 200.0 : 0) + 64 + 35
+//        if bottom <= keyboardHeight + keyboardTop {
+//            nodeBackgroundView.contentOffset = CGPoint(x: 0, y: bottom - keyboardHeight)
+//        } else {
+//            nodeBackgroundView.contentOffset = CGPoint(x: 0, y: bottom - keyboardHeight - keyboardTop)
+//        }
     }
     
     func showShareBoard() {
@@ -223,32 +235,10 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
             let textView: UIView = self.textView.value(forKey: "containerView") as! UIView
             let size = CGSize(width: view.width, height: headImageView.height + textView.height)
             UIGraphicsBeginImageContextWithOptions(size, false, scale)
-            view.drawHierarchy(in: CGRect.init(x: 0, y: 0, width: view.width, height: view.height), afterScreenUpdates: false)
+            view.drawHierarchy(in: CGRect.init(x: 0, y: -64, width: view.width, height: view.height), afterScreenUpdates: false)
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             return image
-        }
-    }
-}
-
-extension NodeEditViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.hasHeadImage.value ? 2 : 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if viewModel.hasHeadImage.value {
-            if indexPath.row == 0 {
-                let cell: NodeHeadImageTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                return cell
-            } else {
-                let cell: NodeEditTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                return cell
-            }
-        } else {
-            let cell: NodeEditTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-            return cell
         }
     }
 }

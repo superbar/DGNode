@@ -21,5 +21,12 @@ class NodeEditTableViewCell: UITableViewCell, ReuseableCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let view = super.hitTest(point, with: event)
+        
+        print("1111")
+        return view
+    }
 
 }
