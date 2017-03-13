@@ -44,11 +44,11 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
         deleteHeadImageButton.setBackgroundImage(#imageLiteral(resourceName: "close"), for: .normal)
         addSubview(deleteHeadImageButton)
         
-        deleteHeadImageButton.frame.size = CGSize(width: 20, height: 20)
+        deleteHeadImageButton.frame.size = CGSize(width: 16, height: 16)
         deleteHeadImageButton.right = frame.width - 12
         deleteHeadImageButton.bottom = frame.height - 12
         
-        let doubleTap = UITapGestureRecognizer.init(target: self, action: #selector(doubleTap(_:)))
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTap(_:)))
         doubleTap.numberOfTapsRequired = 2
         addGestureRecognizer(doubleTap)
     }

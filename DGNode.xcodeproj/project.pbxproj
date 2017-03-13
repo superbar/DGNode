@@ -13,6 +13,7 @@
 		864921FA1E7546A800D6547E /* NodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864921F91E7546A800D6547E /* NodeTextView.swift */; };
 		86544C661E763C060018679A /* NodeHeadImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86544C651E763C060018679A /* NodeHeadImageTableViewCell.swift */; };
 		86544C681E763C820018679A /* NodeEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86544C671E763C820018679A /* NodeEditTableViewCell.swift */; };
+		86544C6A1E76A5800018679A /* NodeKeyboardToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86544C691E76A5800018679A /* NodeKeyboardToolBar.swift */; };
 		8675B45D1E716B6E0011CD19 /* DGAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8675B45C1E716B6E0011CD19 /* DGAlertController.swift */; };
 		8675B45F1E716B970011CD19 /* DGAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8675B45E1E716B970011CD19 /* DGAlertViewModel.swift */; };
 		8675B4641E71BCE90011CD19 /* NodeToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8675B4631E71BCE80011CD19 /* NodeToolBarView.swift */; };
@@ -65,6 +66,7 @@
 		864921F91E7546A800D6547E /* NodeTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeTextView.swift; sourceTree = "<group>"; };
 		86544C651E763C060018679A /* NodeHeadImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeHeadImageTableViewCell.swift; sourceTree = "<group>"; };
 		86544C671E763C820018679A /* NodeEditTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeEditTableViewCell.swift; sourceTree = "<group>"; };
+		86544C691E76A5800018679A /* NodeKeyboardToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeKeyboardToolBar.swift; sourceTree = "<group>"; };
 		8675B45C1E716B6E0011CD19 /* DGAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGAlertController.swift; sourceTree = "<group>"; };
 		8675B45E1E716B970011CD19 /* DGAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGAlertViewModel.swift; sourceTree = "<group>"; };
 		8675B4631E71BCE80011CD19 /* NodeToolBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeToolBarView.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				864921F91E7546A800D6547E /* NodeTextView.swift */,
 				86544C651E763C060018679A /* NodeHeadImageTableViewCell.swift */,
 				86544C671E763C820018679A /* NodeEditTableViewCell.swift */,
+				86544C691E76A5800018679A /* NodeKeyboardToolBar.swift */,
 			);
 			name = Node;
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 				86B861231E71465900BC22C6 /* ShareBoardView.swift in Sources */,
 				86B8611B1E7143CD00BC22C6 /* DGImagePickerController.swift in Sources */,
 				867844311E70FF6D00177660 /* NodeListViewModel.swift in Sources */,
+				86544C6A1E76A5800018679A /* NodeKeyboardToolBar.swift in Sources */,
 				8678441C1E70FA7F00177660 /* UIView+Frame.swift in Sources */,
 				867844271E70FEAA00177660 /* ViewModelService.swift in Sources */,
 				8678442B1E70FEE600177660 /* ViewModelProtocol.swift in Sources */,

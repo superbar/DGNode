@@ -20,6 +20,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
 
     let viewModel: NodeEditViewModel
     
+    let keyboardCloseButton = UIButton()
     let nodeBackgroundView = UIScrollView()
     let textView = NodeTextView()
     let headImageView = NodeHeadImageView()
@@ -62,11 +63,19 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         nodeBackgroundView.delegate = self
         view.addSubview(nodeBackgroundView)
         
+        keyboardCloseButton.backgroundColor = .red
+        keyboardCloseButton.frame.size = CGSize(width: 15, height: 15)
+        keyboardCloseButton.right = view.right
+        keyboardCloseButton.bottom = view.bottom
+        keyboardCloseButton.isHidden = true
+        keyboardCloseButton.addTarget(self, action: #selector(hiddenKeyboard), for: .touchUpInside)
+        view.addSubview(keyboardCloseButton)
+        
         nodeBackgroundView.addSubview(headImageView)
         
         textView.placeholderText = "想要分享什么？"
         textView.placeholderFont = UIFont.systemFont(ofSize: 14.0)
-        textView.textContainerInset = UIEdgeInsets(top: 30, left: 35, bottom: 30, right: 35)
+        textView.textContainerInset = UIEdgeInsets(top: 50, left: 55, bottom: 50, right: 55)
         textView.font = UIFont.systemFont(ofSize: 14.0)
         textView.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         textView.delegate = self
@@ -100,7 +109,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
                 text.yy_setKern(1.0, range: text.yy_rangeOfAll())
                 self.textView.text = node.content
                 
-                let size = CGSize(width: self.view.width - 70, height: CGFloat.greatestFiniteMagnitude)
+                let size = CGSize(width: self.view.width - 110, height: CGFloat.greatestFiniteMagnitude)
                 if let textLayout = YYTextLayout(containerSize: size, text: text) {
                     textHeight = textLayout.textBoundingSize.height + 60
                 }
@@ -169,25 +178,20 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
     
     func keyboardChanged(with transition: YYTextKeyboardTransition) {
         let y = transition.toFrame.minY
-        keyboardTop = y
-        keyboardHeight = transition.toFrame.height
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             let selectionView: UIView = self.textView.value(forKeyPath: "selectionView.caretView") as! UIView
-            let bottom = selectionView.bottom + (self.viewModel.hasHeadImage.value ? 200.0 : 0) + 64 + 35
-            if y < bottom {
-                var ry = bottom - y - 29
-                if ry > y {
-                    ry = y - 29
-                }
-                UIView.animate(withDuration: transition.animationDuration, delay: 0, options: [transition.animationOption, .beginFromCurrentState], animations: {
-                    self.nodeBackgroundView.contentOffset = CGPoint(x: 0, y: ry)
-                }, completion: nil)
-            }
+            let bottom = selectionView.bottom + (self.viewModel.hasHeadImage.value ? 200.0 : 0)
+            print(bottom)
         }
+        UIView.animate(withDuration: transition.animationDuration, delay: 0, options: [transition.animationOption, .beginFromCurrentState], animations: {
+            self.keyboardCloseButton.isHidden = transition.fromVisible.boolValue
+            self.keyboardCloseButton.bottom = y
+        }, completion: nil)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        textView.resignFirstResponder()
+//        textView.resignFirstResponder()
 //        nodeBackgroundView.contentOffset = CGPoint(x: 0, y: 0)
     }
     
@@ -197,13 +201,6 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         guard textHeight > 0 else { return }
         self.textView.frame.size.height = textHeight
         nodeBackgroundView.contentSize = CGSize(width: 0, height: textHeight + headImageHeight)
-//        let selectionView: UIView = self.textView.value(forKeyPath: "selectionView.caretView") as! UIView
-//        let bottom = selectionView.bottom + (self.viewModel.hasHeadImage.value ? 200.0 : 0) + 64 + 35
-//        if bottom <= keyboardHeight + keyboardTop {
-//            nodeBackgroundView.contentOffset = CGPoint(x: 0, y: bottom - keyboardHeight)
-//        } else {
-//            nodeBackgroundView.contentOffset = CGPoint(x: 0, y: bottom - keyboardHeight - keyboardTop)
-//        }
     }
     
     func showShareBoard() {
@@ -244,11 +241,15 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
             let textView: UIView = self.textView.value(forKey: "containerView") as! UIView
             let size = CGSize(width: view.width, height: headImageView.height + textView.height)
             UIGraphicsBeginImageContextWithOptions(size, false, scale)
-            view.drawHierarchy(in: CGRect(x: 0, y: -64, width: view.width, height: view.height), afterScreenUpdates: false)
+            view.drawHierarchy(in: CGRect(x: 0, y: -64, width: view.width, height: size.height), afterScreenUpdates: false)
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             return image
         }
+    }
+    
+    func hiddenKeyboard() {
+        view.endEditing(true)
     }
 }
 
