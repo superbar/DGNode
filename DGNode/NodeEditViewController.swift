@@ -108,6 +108,8 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
             if let image = node.headImage {
                 self.viewModel.hasHeadImage.value = true
                 self.headImageView.setImage(image)
+                self.headImageView.scrollView.setZoomScale(node.zoomScale, animated: false)
+                self.headImageView.scrollView.contentOffset = node.headImageScrollRect.origin
                 headImageHeight = 200
             }
             if textHeight > 0 {
@@ -130,7 +132,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
             let height: CGFloat = has ? 200.0 : 0
             self.headImageView.frame.size.height = height
             self.textView.top = height
-            self.nodeBackgroundView.contentSize = CGSize.init(width: 0, height: self.textView.height + height)
+            self.nodeBackgroundView.contentSize = CGSize(width: 0, height: self.textView.height + height)
             return !has
         })
         
@@ -152,7 +154,9 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         if let text = textView.attributedText?.string {
             node.content = text
         }
-//        node.headImageScrollRect.origin = headImageView.scrollView.contentOffset
+        
+        node.headImageScrollRect.origin = headImageView.scrollView.contentOffset
+        node.zoomScale = headImageView.scrollView.zoomScale
         if !node.content.isEmpty {
             node.save()
             viewModel.reloadNodeListObserver.send(value: true)

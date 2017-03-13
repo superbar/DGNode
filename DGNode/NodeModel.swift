@@ -16,6 +16,7 @@ class NodeModel: DGDataModel {
     var content: String = ""
     var headImage: UIImage?
     var headImageScrollRect: CGRect = .zero
+    var zoomScale: CGFloat = 1
     var textLayout: YYTextLayout?
     
     var height: CGFloat = 0
@@ -29,7 +30,7 @@ class NodeModel: DGDataModel {
     }
     
     static let properties: [String] = {
-        return ["nodeID", "content", "headImage", "headImageScrollRect"]
+        return ["nodeID", "content", "headImage", "headImageScrollRect", "zoomScale"]
     }()
     
     override class func persistentProperties() -> [Any] {

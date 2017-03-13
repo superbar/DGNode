@@ -17,9 +17,11 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
     let deleteHeadImageButton = UIButton()
     
     override init(frame: CGRect) {
-        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200.0))
+        super.init(frame: frame)
         
         backgroundColor = .white
+        
+        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200.0)
         
         scrollView.delegate = self
         scrollView.maximumZoomScale = 3
@@ -30,7 +32,7 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
         scrollView.bouncesZoom = true
         scrollView.alwaysBounceVertical = false
         scrollView.clipsToBounds = true
-        scrollView.frame = self.frame
+        scrollView.frame = frame
         addSubview(scrollView)
         
         imageContainerView.clipsToBounds = true
@@ -46,12 +48,28 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
         addSubview(deleteHeadImageButton)
         
         deleteHeadImageButton.frame.size = CGSize(width: 35, height: 35)
-        deleteHeadImageButton.right = self.frame.width - 12
-        deleteHeadImageButton.bottom = self.frame.height - 12
+        deleteHeadImageButton.right = frame.width - 12
+        deleteHeadImageButton.bottom = frame.height - 12
+        
+        let doubleTap = UITapGestureRecognizer.init(target: self, action: #selector(doubleTap(_:)))
+        doubleTap.numberOfTapsRequired = 2
+        addGestureRecognizer(doubleTap)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func doubleTap(_ gesture: UITapGestureRecognizer) {
+        if scrollView.zoomScale > 1 {
+            scrollView.setZoomScale(1, animated: true)
+        } else {
+            let touchPoint = gesture.location(in: scrollView)
+            let zoomScale = scrollView.maximumZoomScale
+            let x = width / zoomScale
+            let y = height / zoomScale
+            scrollView.zoom(to: CGRect(x: touchPoint.x - x / 2, y: touchPoint.y - y / 2, width: x, height: y), animated: true)
+        }
     }
     
     func setImage(_ image: UIImage?) {
@@ -64,34 +82,40 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
     }
 
     func resize() {
-        imageContainerView.frame = bounds
-        guard let image = imageView.image else { return }
-        if (image.size.height / image.size.width > scrollView.frame.height / scrollView.frame.width) {
-            imageContainerView.frame.size.height = floor(image.size.height / (image.size.width / scrollView.frame.width));
-        } else {
-            var height = image.size.height / image.size.width * scrollView.frame.width;
-            if (height < 1 || height.isNaN) {
-                height = scrollView.frame.height
-            }
-            imageContainerView.frame.size.height = floor(height)
-            imageContainerView.center.y = scrollView.frame.height / 2
-        }
-        if (imageContainerView.frame.height > scrollView.frame.height && imageContainerView.frame.height - scrollView.frame.height <= 1) {
-            imageContainerView.frame.size.height = scrollView.frame.height
-        }
-        let h = max(imageContainerView.frame.height, scrollView.frame.height)
-        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: h)
-        scrollView.scrollRectToVisible(scrollView.bounds, animated: false)
+        imageContainerView.frame.origin = .zero
+        imageContainerView.width = width
         
-        if (imageContainerView.frame.height <= scrollView.frame.height) {
+        guard let image = imageView.image else { return }
+        if image.size.height / image.size.width > height / width {
+            imageContainerView.height = floor(image.size.height / (image.size.width / width))
+        } else {
+            var height = image.size.height / image.size.width * width
+            if height < 1 || height.isNaN {
+                height = self.height
+            }
+            height = floor(height)
+            imageContainerView.height = height
+            imageContainerView.center.y = self.height / 2
+        }
+        if imageContainerView.height > height && imageContainerView.height - height <= 1 {
+            imageContainerView.height = self.height
+        }
+        scrollView.contentSize = CGSize.init(width: width, height: max(imageContainerView.height, height))
+        scrollView.scrollRectToVisible(bounds, animated: false)
+        
+        if imageContainerView.height <= height {
             scrollView.alwaysBounceVertical = false
         } else {
             scrollView.alwaysBounceVertical = true
         }
+        
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         imageView.frame = imageContainerView.bounds
+        CATransaction.commit()
     }
     
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageContainerView
     }
     
@@ -101,13 +125,5 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
         let offsetX = (frame.width > size.width) ? (frame.width - size.width) * 0.5 : 0.0;
         let offsetY = (frame.height > size.height) ? (frame.height - size.height) * 0.5 : 0.0;
         imageContainerView.center = CGPoint(x: size.width * 0.5 + offsetX, y: size.height * 0.5 + offsetY);
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("1")
-    }
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        return super.hitTest(point, with: event)
     }
 }

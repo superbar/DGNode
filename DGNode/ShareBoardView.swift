@@ -123,7 +123,9 @@ class ShareBoardView: UIView {
         msgObj.shareObject = shareObject
         
         UMSocialManager.default().share(to: platformType, messageObject: msgObj, currentViewController: self) { (data, error) in
-            
+            if error == nil {
+                SVProgressHUD.showSuccess(withStatus: "分享成功")
+            }
         }
     }
     

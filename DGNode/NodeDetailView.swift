@@ -24,7 +24,7 @@ class NodeDetailView: UIView {
         
         addSubview(headImageView)
         
-        headImageView.scrollView.isScrollEnabled = false
+//        headImageView.isScrollEnabled = false
         headImageView.deleteHeadImageButton.isHidden = true
         headImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         headImageView.autoSetDimension(.height, toSize: 200)
@@ -43,7 +43,7 @@ class NodeDetailView: UIView {
         if let headImage = node.headImage {
             headImageView.setImage(headImage)
             headImageView.isHidden = false
-            headImageView.scrollView.setContentOffset(node.headImageScrollRect.origin, animated: false)
+//            headImageView.scrollView.setContentOffset(node.headImageScrollRect.origin, animated: false)
             totalHeight += 200.0
         } else {
             headImageView.isHidden = true
