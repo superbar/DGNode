@@ -14,11 +14,10 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
     let scrollView = DGScrollView()
     let imageContainerView = UIView()
     let imageView = UIImageView()
-    let addImageButton = UIButton()
     let deleteHeadImageButton = UIButton()
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200.0))
         
         backgroundColor = .white
         
@@ -31,6 +30,7 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
         scrollView.bouncesZoom = true
         scrollView.alwaysBounceVertical = false
         scrollView.clipsToBounds = true
+        scrollView.frame = self.frame
         addSubview(scrollView)
         
         imageContainerView.clipsToBounds = true
@@ -38,35 +38,16 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
         
         imageContainerView.addSubview(imageView)
         
-        addImageButton.setTitle("添加题图", for: .normal)
-        addImageButton.setTitleColor(.black, for: .normal)
-        addImageButton.layer.borderColor = UIColor.black.cgColor
-        addImageButton.layer.borderWidth = 1.0
-        addImageButton.layer.cornerRadius = 5.0
-        addSubview(addImageButton)
-        
         deleteHeadImageButton.setTitle("X", for: .normal)
         deleteHeadImageButton.setTitleColor(.black, for: .normal)
         deleteHeadImageButton.layer.borderColor = UIColor.black.cgColor
         deleteHeadImageButton.layer.borderWidth = 1.0
         deleteHeadImageButton.layer.cornerRadius = 5.0
         addSubview(deleteHeadImageButton)
-    }
-    
-    func setFrame(frame: CGRect) {
-        self.frame = frame
-        
-        scrollView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
-        
-        addImageButton.frame.size = CGSize(width: frame.width - 48, height: frame.height - 48)
-        addImageButton.top = 24
-        addImageButton.left = 24
-        
-        imageContainerView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
-        
-        deleteHeadImageButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40);
-        deleteHeadImageButton.right = width - 12
-        deleteHeadImageButton.bottom = height - 12
+
+        deleteHeadImageButton.autoSetDimensions(to: CGSize(width: 40, height: 40))
+        deleteHeadImageButton.autoPinEdge(toSuperviewEdge: .right, withInset: 12)
+        deleteHeadImageButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 12)
     }
     
     required init?(coder aDecoder: NSCoder) {

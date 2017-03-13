@@ -13,16 +13,17 @@ import ReactiveCocoa
 import ReactiveSwift
 import Result
 import TBActionSheetKit
-import Photos
 import SVProgressHUD
+import SwiftHEXColors
 
 class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboardObserver {
 
     let viewModel: NodeEditViewModel
     
+    let tableView: UITableView
     let nodeBackgroundView = DGScrollView()
-    let textView = YYTextView()
-//    let headImageView = NodeHeadImageView()
+    let textView = NodeTextView()
+    let headImageView = NodeHeadImageView()
     lazy var shareBoardView: ShareBoardView = {
         let shareBoardView = ShareBoardView()
         shareBoardView.frame.size = CGSize(width: self.view.width, height: 210)
@@ -30,76 +31,12 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
     }()
     
     var textViewHeightConstraint: NSLayoutConstraint?
+    var headImageHeightConstraint: NSLayoutConstraint?
     
     init(viewModel: NodeEditViewModel) {
         self.viewModel = viewModel
+        tableView = UITableView(frame: .zero, style: .grouped)
         super.init(nibName: nil, bundle: nil)
-        
-        nodeBackgroundView.isScrollEnabled = false
-        nodeBackgroundView.frame = CGRect(x: 0, y: 64, width: view.width, height: view.height - 64)
-        nodeBackgroundView.backgroundColor = .white
-        nodeBackgroundView.delegate = self
-        view.addSubview(nodeBackgroundView)
-        
-//        headImageView.addImageButton.reactive.controlEvents(.touchUpInside).observeValues { [weak self] _ in
-//            guard let `self` = self else { return }
-//            let alertVM = AlertViewModel(title: nil, message: "选择图片", preferredStyle: .actionSheet)
-//            let crameAction = UIAlertAction(title: "拍照", style: .default, handler: { action in
-//                self.takeImage(source: .camera)
-//            })
-//            let photoLibraryAction = UIAlertAction(title: "从相册选取", style: .default, handler: { action in
-//                self.takeImage(source: .photoLibrary)
-//            })
-//            let cancelAciton = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-//            alertVM.actions.value = [crameAction, photoLibraryAction, cancelAciton]
-//            Service.default.viewModelService.presentViewModel(alertVM, animated: true, completion: nil)
-//        }
-        
-//        headImageView.deleteHeadImageButton.reactive.controlEvents(.touchUpInside).observeValues { [weak self] _ in
-//            guard let `self` = self else { return }
-//            self.viewModel.hasHeadImage.value = false
-//            self.viewModel.node.value.headImage = nil
-//        }
-        
-//        headImageView.addImageButton.reactive.isHidden <~ viewModel.hasHeadImage
-//        headImageView.imageContainerView.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
-//        headImageView.deleteHeadImageButton.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
-//        
-//        nodeBackgroundView.contentView.addSubview(headImageView)
-        
-//        toolBar.backgroundColor = .red
-//        toolBar.frame.size = CGSize(width: view.width, height: 44)
-//        toolBar.bottom = view.bottom
-//        view.addSubview(toolBar)
-        
-//        headImageView.setFrame(frame: CGRect(x: 0, y: 0, width: view.width, height: 200))
-        
-        textView.placeholderText = "想要分享什么？"
-        textView.placeholderFont = UIFont.systemFont(ofSize: 14.0)
-        textView.textContainerInset = UIEdgeInsets(top: 30, left: 35, bottom: 30, right: 35)
-        textView.font = UIFont.systemFont(ofSize: 14.0)
-        textView.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
-        textView.delegate = self
-        textView.textParser = NodeTextParser()
-        textView.allowsCopyAttributedString = false
-        nodeBackgroundView.contentView.addSubview(textView)
-        
-        textView.autoPinEdgesToSuperviewEdges()
-        
-        viewModel.node.producer.on(value: { [weak self] node in
-            guard let `self` = self else { return }
-            self.viewModel.hasHeadImage.value = node.headImage != nil
-            self.textView.text = node.content
-//            self.textViewHeightConstraint?.autoRemove()
-//            let height: CGFloat = max(300, self.textView.textLayout?.textBoundingSize.height ?? 0)
-//            self.textViewHeightConstraint = self.textView.autoSetDimension(.height, toSize: height)
-        }).start()
-        
-        
-//        viewModel.addHeadImageAction.values.observeValues { [weak self] image in
-//            guard let `self` = self else { return }
-//            guard let image = image else { return }
-//        }
         
         YYTextKeyboardManager.default()?.add(self)
     }
@@ -115,12 +52,97 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.lightGray
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(NodeEditTableViewCell.self)
+        tableView.register(NodeHeadImageTableViewCell.self)
+        view.addSubview(tableView)
+        
         let moreItem = UIBarButtonItem(image: #imageLiteral(resourceName: "barbuttonicon_more"), style: .plain, target: self, action: #selector(showShareBoard))
         let getNodeImageItem = UIBarButtonItem(barButtonSystemItem: .action, pressed: viewModel.addHeadImageCocoaAction)
         navigationItem.rightBarButtonItems = [moreItem, getNodeImageItem]
         automaticallyAdjustsScrollViewInsets = false
         
+        nodeBackgroundView.frame = CGRect(x: 0, y: 64, width: view.width, height: view.height - 64)
+        nodeBackgroundView.backgroundColor = .white
+        nodeBackgroundView.delegate = self
+        view.addSubview(nodeBackgroundView)
+        
+        nodeBackgroundView.contentView.addSubview(headImageView)
+        
+        textView.placeholderText = "想要分享什么？"
+        textView.placeholderFont = UIFont.systemFont(ofSize: 14.0)
+        textView.textContainerInset = UIEdgeInsets(top: 30, left: 35, bottom: 30, right: 35)
+        textView.font = UIFont.systemFont(ofSize: 14.0)
+        textView.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
+        textView.delegate = self
+        textView.isScrollEnabled = false
+        textView.textParser = NodeTextParser()
+        textView.allowsCopyAttributedString = false
+        nodeBackgroundView.contentView.addSubview(textView)
+        
+        headImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        textView.autoPinEdge(toSuperviewEdge: .left)
+        textView.autoPinEdge(toSuperviewEdge: .right)
+        textView.autoPinEdge(.top, to: .bottom, of: headImageView)
+        textViewHeightConstraint = textView.autoSetDimension(.height, toSize: 500)
+        
+        viewModel.addHeadImageAction.values.observeValues { [weak self] image  in
+            guard let `self` = self else { return }
+            if let image = image {
+                self.viewModel.hasHeadImage.value = true
+                self.headImageView.setImage(image)
+                self.viewModel.node.value.headImage = image
+            } else {
+                self.viewModel.hasHeadImage.value = false
+            }
+        }
+        
+        viewModel.node.producer.on(value: { [weak self] node in
+            guard let `self` = self else { return }
+            var textHeight: CGFloat = 0
+            if !node.content.isEmpty {
+                let text = NSMutableAttributedString(string: node.content)
+                text.yy_setFont(UIFont.systemFont(ofSize: 14.0), range: text.yy_rangeOfAll())
+                text.yy_setColor(UIColor(hexString: "555555"), range: text.yy_rangeOfAll())
+                text.yy_setLineSpacing(8.0, range: text.yy_rangeOfAll())
+                text.yy_setKern(1.0, range: text.yy_rangeOfAll())
+                self.textView.attributedText = text
+                
+                let size = CGSize(width: self.view.width - 70, height: CGFloat.greatestFiniteMagnitude)
+                if let textLayout = YYTextLayout(containerSize: size, text: text) {
+                    textHeight = textLayout.textBoundingSize.height + 60
+                }
+            }
+            var headImageHeight: CGFloat = 0
+            if let image = node.headImage {
+                self.viewModel.hasHeadImage.value = true
+                self.headImageView.setImage(image)
+                headImageHeight = 200
+            }
+            if textHeight > 0 {
+                self.textViewHeightConstraint?.autoRemove()
+                self.textViewHeightConstraint = self.textView.autoSetDimension(.height, toSize: textHeight)
+                self.nodeBackgroundView.contentSize = CGSize(width: 0, height: textHeight + headImageHeight)
+            }
+        }).start()
+        
+        headImageView.deleteHeadImageButton.reactive.controlEvents(.touchUpInside).observeValues { [weak self] _ in
+            guard let `self` = self else { return }
+            self.viewModel.hasHeadImage.value = false
+            self.viewModel.node.value.headImage = nil
+        }
+        
+        headImageView.reactive.isHidden <~ viewModel.hasHeadImage.map({ [weak self] has in
+            guard let `self` = self else { return !has }
+            self.headImageHeightConstraint?.autoRemove()
+            self.headImageHeightConstraint = self.headImageView.autoSetDimension(.height, toSize: has ? 200.0 : 0.0)
+            return !has
+        })
+        
+        headImageView.imageContainerView.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
+        headImageView.deleteHeadImageButton.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             let attr = self.textView.attributedText
@@ -147,33 +169,32 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
     }
     
     func keyboardChanged(with transition: YYTextKeyboardTransition) {
-        
-//        UIView.animate(withDuration: transition.animationDuration, delay: 0, options: [transition.animationOption, .beginFromCurrentState], animations: {
-//            self.toolBar.bottom = transition.toFrame.minY
-//        }, completion: nil)
-        
-//        let y = transition.toFrame.minY
-//        let origOffset = nodeBackgroundView.contentOffset
+        nodeBackgroundView.contentOffset = CGPoint(x: 0, y: 200)
     }
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if scrollView === nodeBackgroundView {
-//            return
-//        }
-//        let height: CGFloat = max(300, textView.textLayout?.textBoundingSize.height ?? 0)
-//        textViewHeightConstraint?.autoRemove()
-//        textViewHeightConstraint = textView.autoSetDimension(.height, toSize: height)
-//        nodeBackgroundView.contentSize = CGSize(width: 0, height: height + 200)
-//    }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         textView.resignFirstResponder()
     }
     
+    func textViewDidChange(_ textView: YYTextView) {
+        let textHeight = textView.textLayout?.textBoundingSize.height ?? 0.0
+        let headImageHeight: CGFloat = viewModel.hasHeadImage.value ? 200.0 : 0
+        guard textHeight > 0 else { return }
+        textViewHeightConstraint?.autoRemove()
+        textViewHeightConstraint = textView.autoSetDimension(.height, toSize: textHeight)
+        nodeBackgroundView.contentSize = CGSize(width: 0, height: textHeight + headImageHeight)
+        nodeBackgroundView.contentOffset = CGPoint(x: 0, y: 200)
+    }
+    
     func showShareBoard() {
         textView.resignFirstResponder()
-
-        self.shareBoardView.shareImage = self.convertTextToImage()
+        
+        headImageView.deleteHeadImageButton.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            self.shareBoardView.shareImage = self.convertTextToImage()
+            self.headImageView.deleteHeadImageButton.isHidden = false
+        }
+        
         let actionSheet = TBActionSheet()
         actionSheet.addButton(withTitle: "取消", style: .default)
         actionSheet.sheetWidth = self.view.width
@@ -186,7 +207,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         actionSheet.ambientColor = .white
         actionSheet.show()
     }
-    
+
     func convertTextToImage() -> UIImage? {
         let scale = UIScreen.main.scale
         
@@ -200,12 +221,34 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         } else {
             let view = nodeBackgroundView
             let textView: UIView = self.textView.value(forKey: "containerView") as! UIView
-            let size = CGSize.init(width: view.width, height: textView.height)
+            let size = CGSize(width: view.width, height: headImageView.height + textView.height)
             UIGraphicsBeginImageContextWithOptions(size, false, scale)
-            view.drawHierarchy(in: CGRect(x: 0, y: 0, width: view.width, height: view.height), afterScreenUpdates: false)
+            view.drawHierarchy(in: CGRect.init(x: 0, y: 0, width: view.width, height: view.height), afterScreenUpdates: false)
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             return image
+        }
+    }
+}
+
+extension NodeEditViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.hasHeadImage.value ? 2 : 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if viewModel.hasHeadImage.value {
+            if indexPath.row == 0 {
+                let cell: NodeHeadImageTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                return cell
+            } else {
+                let cell: NodeEditTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                return cell
+            }
+        } else {
+            let cell: NodeEditTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+            return cell
         }
     }
 }

@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.makeKeyAndVisible()
         
-        Service.default.viewModelService.resetRootViewModel(DGTabBarViewModel())
+        Service.default.viewModelService.resetRootViewModel(NodeListViewModel())
         
         initUMSocial()
         

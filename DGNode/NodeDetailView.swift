@@ -25,11 +25,9 @@ class NodeDetailView: UIView {
         addSubview(headImageView)
         
         headImageView.scrollView.isScrollEnabled = false
-        headImageView.addImageButton.isHidden = true
         headImageView.deleteHeadImageButton.isHidden = true
         headImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         headImageView.autoSetDimension(.height, toSize: 200)
-        headImageView.setFrame(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200))
         
         nodeTextView.ignoreCommonProperties = true
         addSubview(nodeTextView)
