@@ -55,7 +55,9 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         super.viewDidLoad()
         
         let moreItem = UIBarButtonItem(image: #imageLiteral(resourceName: "barbuttonicon_more"), style: .plain, target: self, action: #selector(showShareBoard))
+        moreItem.isEnabled = false
         let getNodeImageItem = UIBarButtonItem(barButtonSystemItem: .action, pressed: viewModel.addHeadImageCocoaAction)
+        getNodeImageItem.isEnabled = false
         navigationItem.rightBarButtonItems = [moreItem, getNodeImageItem]
         
         nodeBackgroundView.frame = view.bounds
@@ -111,7 +113,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
                 
                 let size = CGSize(width: self.view.width - 110, height: CGFloat.greatestFiniteMagnitude)
                 if let textLayout = YYTextLayout(containerSize: size, text: text) {
-                    textHeight = textLayout.textBoundingSize.height + 60
+                    textHeight = textLayout.textBoundingSize.height + 100
                 }
             } else {
                 self.textView.becomeFirstResponder()
@@ -181,8 +183,10 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             let selectionView: UIView = self.textView.value(forKeyPath: "selectionView.caretView") as! UIView
-            let bottom = selectionView.bottom + (self.viewModel.hasHeadImage.value ? 200.0 : 0)
-            print(bottom)
+            let bottom = selectionView.bottom + (self.viewModel.hasHeadImage.value ? 200.0 : 0) + 64
+            if y < bottom {
+                self.nodeBackgroundView.contentOffset = CGPoint(x: 0, y: bottom - y)
+            }
         }
         UIView.animate(withDuration: transition.animationDuration, delay: 0, options: [transition.animationOption, .beginFromCurrentState], animations: {
             self.keyboardCloseButton.isHidden = transition.fromVisible.boolValue
@@ -201,6 +205,9 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         guard textHeight > 0 else { return }
         self.textView.frame.size.height = textHeight
         nodeBackgroundView.contentSize = CGSize(width: 0, height: textHeight + headImageHeight)
+        navigationItem.rightBarButtonItems?.forEach({ item in
+            item.isEnabled = !textView.text.isEmpty
+        })
     }
     
     func showShareBoard() {
@@ -237,14 +244,26 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
             UIGraphicsEndImageContext()
             return image
         } else {
-            let view = nodeBackgroundView
-            let textView: UIView = self.textView.value(forKey: "containerView") as! UIView
-            let size = CGSize(width: view.width, height: headImageView.height + textView.height)
-            UIGraphicsBeginImageContextWithOptions(size, false, scale)
-            view.drawHierarchy(in: CGRect(x: 0, y: -64, width: view.width, height: size.height), afterScreenUpdates: false)
-            let image = UIGraphicsGetImageFromCurrentImageContext()
+            
+            let contentView: UIView = textView.value(forKey: "containerView") as! UIView
+            UIGraphicsBeginImageContextWithOptions(contentView.frame.size, false, scale)
+            contentView.drawHierarchy(in: contentView.bounds, afterScreenUpdates: false)
+            let textImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            return image
+            
+            let imageView = headImageView
+            UIGraphicsBeginImageContextWithOptions(imageView.frame.size, false, scale)
+            imageView.drawHierarchy(in: imageView.bounds, afterScreenUpdates: false)
+            let headImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            let size = CGSize(width: imageView.width, height: contentView.height + imageView.height)
+            UIGraphicsBeginImageContextWithOptions(size, false, scale)
+            headImage?.draw(in: CGRect(x: 0, y: 0, width: imageView.width, height: imageView.height))
+            textImage?.draw(in: CGRect(x: 0, y: imageView.height, width: contentView.width, height: contentView.height))
+            
+            let result = UIGraphicsGetImageFromCurrentImageContext()
+            return result
         }
     }
     
