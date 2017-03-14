@@ -11,19 +11,14 @@
 		864921DF1E72A9BF00D6547E /* NodeTextParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864921DE1E72A9BF00D6547E /* NodeTextParser.swift */; };
 		864921F61E731E9D00D6547E /* UIBarButtonItem+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864921F51E731E9D00D6547E /* UIBarButtonItem+Reactive.swift */; };
 		864921FA1E7546A800D6547E /* NodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864921F91E7546A800D6547E /* NodeTextView.swift */; };
-		86544C661E763C060018679A /* NodeHeadImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86544C651E763C060018679A /* NodeHeadImageTableViewCell.swift */; };
-		86544C681E763C820018679A /* NodeEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86544C671E763C820018679A /* NodeEditTableViewCell.swift */; };
-		86544C6A1E76A5800018679A /* NodeKeyboardToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86544C691E76A5800018679A /* NodeKeyboardToolBar.swift */; };
 		8675B45D1E716B6E0011CD19 /* DGAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8675B45C1E716B6E0011CD19 /* DGAlertController.swift */; };
 		8675B45F1E716B970011CD19 /* DGAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8675B45E1E716B970011CD19 /* DGAlertViewModel.swift */; };
-		8675B4641E71BCE90011CD19 /* NodeToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8675B4631E71BCE80011CD19 /* NodeToolBarView.swift */; };
 		867844001E70432900177660 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867843FF1E70432900177660 /* AppDelegate.swift */; };
 		867844021E70432900177660 /* DGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867844011E70432900177660 /* DGViewController.swift */; };
 		867844071E70432900177660 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867844061E70432900177660 /* Assets.xcassets */; };
 		8678440A1E70432900177660 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 867844081E70432900177660 /* LaunchScreen.storyboard */; };
 		8678441C1E70FA7F00177660 /* UIView+Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8678441B1E70FA7F00177660 /* UIView+Frame.swift */; };
 		8678441E1E70FC1E00177660 /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8678441D1E70FC1E00177660 /* UIImage+Color.swift */; };
-		867844211E70FD7300177660 /* DGTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867844201E70FD7300177660 /* DGTabBarController.swift */; };
 		867844241E70FE6C00177660 /* NodeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867844231E70FE6C00177660 /* NodeListViewController.swift */; };
 		867844271E70FEAA00177660 /* ViewModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867844261E70FEAA00177660 /* ViewModelService.swift */; };
 		867844291E70FEC300177660 /* ViewModelServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867844281E70FEC300177660 /* ViewModelServiceImpl.swift */; };
@@ -41,13 +36,7 @@
 		8678444F1E71089700177660 /* NodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8678444E1E71089700177660 /* NodeModel.swift */; };
 		867844511E7109B500177660 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867844501E7109B500177660 /* UITableView+Extension.swift */; };
 		867844541E710AC500177660 /* NodeListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867844531E710AC500177660 /* NodeListTableViewCell.swift */; };
-		867844561E710C0D00177660 /* DGTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867844551E710C0D00177660 /* DGTabBarViewModel.swift */; };
-		867844581E711C2F00177660 /* NodeListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867844571E711C2F00177660 /* NodeListHeaderView.swift */; };
-		8678445A1E71203700177660 /* NodeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867844591E71203700177660 /* NodeDetailViewController.swift */; };
-		8678445C1E71204C00177660 /* NodeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8678445B1E71204C00177660 /* NodeDetailViewModel.swift */; };
-		8678445E1E71287200177660 /* NodeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8678445D1E71287200177660 /* NodeDetailView.swift */; };
 		867844601E7128A300177660 /* NodeHeadImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8678445F1E7128A300177660 /* NodeHeadImageView.swift */; };
-		867844621E712F6400177660 /* NodeDetailActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867844611E712F6400177660 /* NodeDetailActionButtonsView.swift */; };
 		86B8611B1E7143CD00BC22C6 /* DGImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B8611A1E7143CD00BC22C6 /* DGImagePickerController.swift */; };
 		86B8611D1E7143F000BC22C6 /* DGImagePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B8611C1E7143F000BC22C6 /* DGImagePickerViewModel.swift */; };
 		86B861211E71464800BC22C6 /* ShareBoardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B861201E71464800BC22C6 /* ShareBoardItem.swift */; };
@@ -64,12 +53,8 @@
 		864921DE1E72A9BF00D6547E /* NodeTextParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeTextParser.swift; sourceTree = "<group>"; };
 		864921F51E731E9D00D6547E /* UIBarButtonItem+Reactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Reactive.swift"; sourceTree = "<group>"; };
 		864921F91E7546A800D6547E /* NodeTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeTextView.swift; sourceTree = "<group>"; };
-		86544C651E763C060018679A /* NodeHeadImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeHeadImageTableViewCell.swift; sourceTree = "<group>"; };
-		86544C671E763C820018679A /* NodeEditTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeEditTableViewCell.swift; sourceTree = "<group>"; };
-		86544C691E76A5800018679A /* NodeKeyboardToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeKeyboardToolBar.swift; sourceTree = "<group>"; };
 		8675B45C1E716B6E0011CD19 /* DGAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGAlertController.swift; sourceTree = "<group>"; };
 		8675B45E1E716B970011CD19 /* DGAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGAlertViewModel.swift; sourceTree = "<group>"; };
-		8675B4631E71BCE80011CD19 /* NodeToolBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeToolBarView.swift; sourceTree = "<group>"; };
 		867843FC1E70432900177660 /* DGNode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DGNode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		867843FF1E70432900177660 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		867844011E70432900177660 /* DGViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGViewController.swift; sourceTree = "<group>"; };
@@ -79,7 +64,6 @@
 		867844111E70631C00177660 /* DGNode-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DGNode-Bridging-Header.h"; sourceTree = "<group>"; };
 		8678441B1E70FA7F00177660 /* UIView+Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Frame.swift"; sourceTree = "<group>"; };
 		8678441D1E70FC1E00177660 /* UIImage+Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
-		867844201E70FD7300177660 /* DGTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGTabBarController.swift; sourceTree = "<group>"; };
 		867844231E70FE6C00177660 /* NodeListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeListViewController.swift; sourceTree = "<group>"; };
 		867844261E70FEAA00177660 /* ViewModelService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelService.swift; sourceTree = "<group>"; };
 		867844281E70FEC300177660 /* ViewModelServiceImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelServiceImpl.swift; sourceTree = "<group>"; };
@@ -100,13 +84,7 @@
 		8678444E1E71089700177660 /* NodeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeModel.swift; sourceTree = "<group>"; };
 		867844501E7109B500177660 /* UITableView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		867844531E710AC500177660 /* NodeListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeListTableViewCell.swift; sourceTree = "<group>"; };
-		867844551E710C0D00177660 /* DGTabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGTabBarViewModel.swift; sourceTree = "<group>"; };
-		867844571E711C2F00177660 /* NodeListHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeListHeaderView.swift; sourceTree = "<group>"; };
-		867844591E71203700177660 /* NodeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeDetailViewController.swift; sourceTree = "<group>"; };
-		8678445B1E71204C00177660 /* NodeDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeDetailViewModel.swift; sourceTree = "<group>"; };
-		8678445D1E71287200177660 /* NodeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeDetailView.swift; sourceTree = "<group>"; };
 		8678445F1E7128A300177660 /* NodeHeadImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeHeadImageView.swift; sourceTree = "<group>"; };
-		867844611E712F6400177660 /* NodeDetailActionButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeDetailActionButtonsView.swift; sourceTree = "<group>"; };
 		86B8611A1E7143CD00BC22C6 /* DGImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGImagePickerController.swift; sourceTree = "<group>"; };
 		86B8611C1E7143F000BC22C6 /* DGImagePickerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGImagePickerViewModel.swift; sourceTree = "<group>"; };
 		86B861201E71464800BC22C6 /* ShareBoardItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareBoardItem.swift; sourceTree = "<group>"; };
@@ -275,7 +253,6 @@
 			isa = PBXGroup;
 			children = (
 				867844011E70432900177660 /* DGViewController.swift */,
-				867844201E70FD7300177660 /* DGTabBarController.swift */,
 				86B8611A1E7143CD00BC22C6 /* DGImagePickerController.swift */,
 				8675B45C1E716B6E0011CD19 /* DGAlertController.swift */,
 			);
@@ -286,7 +263,6 @@
 			isa = PBXGroup;
 			children = (
 				867844231E70FE6C00177660 /* NodeListViewController.swift */,
-				867844591E71203700177660 /* NodeDetailViewController.swift */,
 				86B861241E714D5400BC22C6 /* NodeEditViewController.swift */,
 			);
 			name = Node;
@@ -306,7 +282,6 @@
 			isa = PBXGroup;
 			children = (
 				8678442A1E70FEE600177660 /* ViewModelProtocol.swift */,
-				867844551E710C0D00177660 /* DGTabBarViewModel.swift */,
 				86B8611C1E7143F000BC22C6 /* DGImagePickerViewModel.swift */,
 				8675B45E1E716B970011CD19 /* DGAlertViewModel.swift */,
 			);
@@ -317,7 +292,6 @@
 			isa = PBXGroup;
 			children = (
 				867844301E70FF6D00177660 /* NodeListViewModel.swift */,
-				8678445B1E71204C00177660 /* NodeDetailViewModel.swift */,
 				86B861261E714D6E00BC22C6 /* NodeEditViewModel.swift */,
 			);
 			name = Node;
@@ -335,17 +309,10 @@
 			isa = PBXGroup;
 			children = (
 				867844531E710AC500177660 /* NodeListTableViewCell.swift */,
-				867844571E711C2F00177660 /* NodeListHeaderView.swift */,
-				8678445D1E71287200177660 /* NodeDetailView.swift */,
 				8678445F1E7128A300177660 /* NodeHeadImageView.swift */,
-				867844611E712F6400177660 /* NodeDetailActionButtonsView.swift */,
 				86B861221E71465900BC22C6 /* ShareBoardView.swift */,
-				8675B4631E71BCE80011CD19 /* NodeToolBarView.swift */,
 				864921DE1E72A9BF00D6547E /* NodeTextParser.swift */,
 				864921F91E7546A800D6547E /* NodeTextView.swift */,
-				86544C651E763C060018679A /* NodeHeadImageTableViewCell.swift */,
-				86544C671E763C820018679A /* NodeEditTableViewCell.swift */,
-				86544C691E76A5800018679A /* NodeKeyboardToolBar.swift */,
 			);
 			name = Node;
 			sourceTree = "<group>";
@@ -496,8 +463,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8678445A1E71203700177660 /* NodeDetailViewController.swift in Sources */,
-				8678445E1E71287200177660 /* NodeDetailView.swift in Sources */,
 				864921DD1E72541E00D6547E /* DGDataModel.swift in Sources */,
 				86B8611D1E7143F000BC22C6 /* DGImagePickerViewModel.swift in Sources */,
 				864921DF1E72A9BF00D6547E /* NodeTextParser.swift in Sources */,
@@ -507,29 +472,20 @@
 				8678441E1E70FC1E00177660 /* UIImage+Color.swift in Sources */,
 				867844001E70432900177660 /* AppDelegate.swift in Sources */,
 				8678444F1E71089700177660 /* NodeModel.swift in Sources */,
-				867844211E70FD7300177660 /* DGTabBarController.swift in Sources */,
 				86B861251E714D5400BC22C6 /* NodeEditViewController.swift in Sources */,
 				864921FA1E7546A800D6547E /* NodeTextView.swift in Sources */,
 				86B861211E71464800BC22C6 /* ShareBoardItem.swift in Sources */,
 				867844351E71045F00177660 /* Service.swift in Sources */,
 				867844541E710AC500177660 /* NodeListTableViewCell.swift in Sources */,
-				867844561E710C0D00177660 /* DGTabBarViewModel.swift in Sources */,
 				86B861271E714D6E00BC22C6 /* NodeEditViewModel.swift in Sources */,
-				8675B4641E71BCE90011CD19 /* NodeToolBarView.swift in Sources */,
-				86544C681E763C820018679A /* NodeEditTableViewCell.swift in Sources */,
-				867844621E712F6400177660 /* NodeDetailActionButtonsView.swift in Sources */,
 				867844291E70FEC300177660 /* ViewModelServiceImpl.swift in Sources */,
-				867844581E711C2F00177660 /* NodeListHeaderView.swift in Sources */,
 				867844601E7128A300177660 /* NodeHeadImageView.swift in Sources */,
-				8678445C1E71204C00177660 /* NodeDetailViewModel.swift in Sources */,
-				86544C661E763C060018679A /* NodeHeadImageTableViewCell.swift in Sources */,
 				867844241E70FE6C00177660 /* NodeListViewController.swift in Sources */,
 				867844511E7109B500177660 /* UITableView+Extension.swift in Sources */,
 				8675B45F1E716B970011CD19 /* DGAlertViewModel.swift in Sources */,
 				86B861231E71465900BC22C6 /* ShareBoardView.swift in Sources */,
 				86B8611B1E7143CD00BC22C6 /* DGImagePickerController.swift in Sources */,
 				867844311E70FF6D00177660 /* NodeListViewModel.swift in Sources */,
-				86544C6A1E76A5800018679A /* NodeKeyboardToolBar.swift in Sources */,
 				8678441C1E70FA7F00177660 /* UIView+Frame.swift in Sources */,
 				867844271E70FEAA00177660 /* ViewModelService.swift in Sources */,
 				8678442B1E70FEE600177660 /* ViewModelProtocol.swift in Sources */,

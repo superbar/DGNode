@@ -134,12 +134,19 @@ class ShareBoardView: UIView {
         
         msgObj.shareObject = shareObject
         
-        closeShareBoardObserver.send(value: ())
         UMSocialManager.default().share(to: platformType, messageObject: msgObj, currentViewController: self) { (data, error) in
             if error == nil {
-                SVProgressHUD.showSuccess(withStatus: "分享成功")
-            } else {
-                SVProgressHUD.showError(withStatus: "分享失败")
+                self.closeShareBoardObserver.send(value: ())
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    SVProgressHUD.showSuccess(withStatus: "分享成功")
+                }
+            } else if let error: NSError = error as NSError? {
+                if error.code != 2009 {
+                    self.closeShareBoardObserver.send(value: ())
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        SVProgressHUD.showError(withStatus: "分享失败")
+                    }
+                }
             }
         }
     }

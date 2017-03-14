@@ -171,8 +171,10 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         node.headImageScrollRect.origin = headImageView.scrollView.contentOffset
         node.zoomScale = headImageView.scrollView.zoomScale
         if !node.content.isEmpty {
-            node.save()
-            viewModel.reloadNodeListObserver.send(value: true)
+            DispatchQueue.global().async {
+                node.save()
+                self.viewModel.reloadNodeListObserver.send(value: true)
+            }
         } else {
             viewModel.reloadNodeListObserver.send(value: false)
         }

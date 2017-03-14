@@ -21,7 +21,7 @@ class NodeListViewController: DGViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
-        viewModel.nodes.producer.on(value: { [weak self] nodes in
+        viewModel.nodes.producer.observe(on: UIScheduler()).on(value: { [weak self] nodes in
             guard let `self` = self else { return }
             self.tableView?.reloadData()
         }).start()
