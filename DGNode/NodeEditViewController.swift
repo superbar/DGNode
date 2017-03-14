@@ -21,7 +21,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
     let viewModel: NodeEditViewModel
     
     let keyboardCloseButton = UIButton()
-    let textView = NodeTextView()
+    let textView = DGTextView()
     let headImageView = NodeHeadImageView()
     lazy var shareBoardView: ShareBoardView = {
         let shareBoardView = ShareBoardView()
@@ -124,7 +124,10 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
             self.textView.attributedText = text
         }
         
-        headImageView.deleteHeadImageButton.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
+        headImageView.deleteHeadImageButton.reactive.isHidden <~ viewModel.hasHeadImage.map { [weak self] has in
+            self?.textView.isHasHeadImage = has
+            return !has
+        }
         
         shareBoardView.closeShareBoardSignal.observeValues { [weak self] _ in
             guard let `self` = self else { return }

@@ -7,3 +7,4 @@
 #import <GYDataCenter/GYDataCenter.h>
 
 #import "YYTextView+Load.h"
+#import "DGTextView.h"

@@ -26,12 +26,15 @@ method_exchangeImplementations(originalMethod, swizzledMethod); \
 } \
 
 @implementation YYTextView (Load)
+
+static char key;
+
 + (void)load
 {
 #pragma("clang diagnostic push")
 #pragma clang diagnostic ignored "-Wundeclared-selector"
     
-    SwizzleMethod(YYTextView, @selector(setSelectedTextRange:), @selector(dg_setSelectedTextRange:), NO)
+//    SwizzleMethod(YYTextView, @selector(setSelectedTextRange:), @selector(dg_setSelectedTextRange:), NO)
     
 #pragma clang diagnostic pop
 }
@@ -39,6 +42,17 @@ method_exchangeImplementations(originalMethod, swizzledMethod); \
 - (void)dg_setSelectedTextRange:(YYTextRange *)selectedTextRange
 {
     NSLog(@"dg_setSelectedTextRange");
+}
+
+- (BOOL)isHasHeadImage
+{
+    NSNumber *has = objc_getAssociatedObject(self, &key);
+    return has.boolValue;
+}
+
+- (void)setIsHasHeadImage:(BOOL)isHasHeadImage
+{
+    objc_setAssociatedObject(self, &key, @(isHasHeadImage), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
@@ -61,7 +75,7 @@ method_exchangeImplementations(originalMethod, swizzledMethod); \
 - (NSArray *)dg_selectionRectsForRange:(YYTextRange *)range
 {
     if (range.start.offset == 1 && range.end.offset == 1) {
-        return @[];
+        return [self dg_selectionRectsForRange:range];
     } else {
         return [self dg_selectionRectsForRange:range];
     }

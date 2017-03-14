@@ -44,6 +44,7 @@
 		86B861251E714D5400BC22C6 /* NodeEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B861241E714D5400BC22C6 /* NodeEditViewController.swift */; };
 		86B861271E714D6E00BC22C6 /* NodeEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B861261E714D6E00BC22C6 /* NodeEditViewModel.swift */; };
 		86FBDD641E7797610028F104 /* YYTextView+Load.m in Sources */ = {isa = PBXBuildFile; fileRef = 86FBDD631E7797610028F104 /* YYTextView+Load.m */; };
+		86FBDD671E77DC610028F104 /* DGTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86FBDD661E77DC610028F104 /* DGTextView.m */; };
 		EC5BC7F77FD93FB898075A77 /* Pods_DGNode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45827BEF82458EC08F462681 /* Pods_DGNode.framework */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +95,8 @@
 		86B861261E714D6E00BC22C6 /* NodeEditViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeEditViewModel.swift; sourceTree = "<group>"; };
 		86FBDD621E7797610028F104 /* YYTextView+Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YYTextView+Load.h"; sourceTree = "<group>"; };
 		86FBDD631E7797610028F104 /* YYTextView+Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YYTextView+Load.m"; sourceTree = "<group>"; };
+		86FBDD651E77DC610028F104 /* DGTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGTextView.h; sourceTree = "<group>"; };
+		86FBDD661E77DC610028F104 /* DGTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGTextView.m; sourceTree = "<group>"; };
 		B73DB72CD68CA64A26F492B7 /* Pods-DGNode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DGNode.release.xcconfig"; path = "Pods/Target Support Files/Pods-DGNode/Pods-DGNode.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -250,6 +253,8 @@
 				864921F51E731E9D00D6547E /* UIBarButtonItem+Reactive.swift */,
 				86FBDD621E7797610028F104 /* YYTextView+Load.h */,
 				86FBDD631E7797610028F104 /* YYTextView+Load.m */,
+				86FBDD651E77DC610028F104 /* DGTextView.h */,
+				86FBDD661E77DC610028F104 /* DGTextView.m */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -494,6 +499,7 @@
 				867844311E70FF6D00177660 /* NodeListViewModel.swift in Sources */,
 				8678441C1E70FA7F00177660 /* UIView+Frame.swift in Sources */,
 				867844271E70FEAA00177660 /* ViewModelService.swift in Sources */,
+				86FBDD671E77DC610028F104 /* DGTextView.m in Sources */,
 				8678442B1E70FEE600177660 /* ViewModelProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
