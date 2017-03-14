@@ -15,6 +15,7 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
     let imageContainerView = UIView()
     let imageView = UIImageView()
     let deleteHeadImageButton = UIButton()
+    let v = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,9 +49,13 @@ class NodeHeadImageView: UIView, UIScrollViewDelegate {
         deleteHeadImageButton.right = frame.width - 12
         deleteHeadImageButton.bottom = frame.height - 12
         
+        v.frame = CGRect.init(x: 0, y: 200, width: frame.width, height: 50)
+        v.isUserInteractionEnabled = true
+        addSubview(v)
+        
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTap(_:)))
         doubleTap.numberOfTapsRequired = 2
-        addGestureRecognizer(doubleTap)
+        imageContainerView.addGestureRecognizer(doubleTap)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -50,7 +50,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         
         let moreItem = UIBarButtonItem(image: #imageLiteral(resourceName: "barbuttonicon_more"), style: .plain, target: self, action: #selector(showShareBoard))
         moreItem.isEnabled = false
-        let getNodeImageItem = UIBarButtonItem(barButtonSystemItem: .action, pressed: viewModel.addHeadImageCocoaAction)
+        let getNodeImageItem = UIBarButtonItem(image: #imageLiteral(resourceName: "addHeadImage"), style: .plain, pressed: viewModel.addHeadImageCocoaAction)
         getNodeImageItem.isEnabled = false
         navigationItem.rightBarButtonItems = [moreItem, getNodeImageItem]
         
@@ -58,7 +58,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         textView.placeholderFont = UIFont.systemFont(ofSize: 14.0)
         textView.textContainerInset = UIEdgeInsets(top: 50, left: 55, bottom: 50, right: 55)
         textView.font = UIFont.systemFont(ofSize: 14.0)
-        textView.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
+        textView.textColor = UIColor(hexString: "555555")
         textView.delegate = self
         textView.alwaysBounceVertical = true
         textView.alwaysBounceHorizontal = false
@@ -69,7 +69,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         
         keyboardCloseButton.setBackgroundImage(#imageLiteral(resourceName: "keyboard_dismiss"), for: .normal)
         keyboardCloseButton.frame.size = CGSize(width: 30, height: 30)
-        keyboardCloseButton.right = view.right - 5.0
+        keyboardCloseButton.right = view.right - 7.0
         keyboardCloseButton.bottom = view.bottom + 30
         keyboardCloseButton.addTarget(self, action: #selector(hiddenKeyboard), for: .touchUpInside)
         view.addSubview(keyboardCloseButton)
@@ -123,6 +123,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
             self.viewModel.node.value.headImage = nil
             let text = self.textView.attributedText?.mutableCopy() as! NSMutableAttributedString
             text.yy_removeAttributes(in: NSRange(location: 0, length: 1))
+            text.replaceCharacters(in: NSRange(location: 0, length: 1), with: "")
             self.textView.attributedText = text
         }
         

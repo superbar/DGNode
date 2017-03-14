@@ -141,8 +141,8 @@ class ShareBoardView: UIView {
                     SVProgressHUD.showSuccess(withStatus: "分享成功")
                 }
             } else if let error: NSError = error as NSError? {
+                self.closeShareBoardObserver.send(value: ())
                 if error.code != 2009 {
-                    self.closeShareBoardObserver.send(value: ())
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                         SVProgressHUD.showError(withStatus: "分享失败")
                     }
