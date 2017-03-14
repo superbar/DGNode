@@ -70,8 +70,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         keyboardCloseButton.setBackgroundImage(#imageLiteral(resourceName: "keyboard_dismiss"), for: .normal)
         keyboardCloseButton.frame.size = CGSize(width: 30, height: 30)
         keyboardCloseButton.right = view.right - 5.0
-        keyboardCloseButton.bottom = view.bottom
-        keyboardCloseButton.isHidden = true
+        keyboardCloseButton.bottom = view.bottom + 30
         keyboardCloseButton.addTarget(self, action: #selector(hiddenKeyboard), for: .touchUpInside)
         view.addSubview(keyboardCloseButton)
         
@@ -161,10 +160,12 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
     }
     
     func keyboardChanged(with transition: YYTextKeyboardTransition) {
-        let y = transition.toFrame.minY
         UIView.animate(withDuration: transition.animationDuration, delay: 0, options: [transition.animationOption, .beginFromCurrentState], animations: {
-            self.keyboardCloseButton.isHidden = transition.fromVisible.boolValue
-            self.keyboardCloseButton.bottom = y
+            if transition.toVisible.boolValue {
+                self.keyboardCloseButton.bottom = transition.toFrame.minY
+            } else {
+                self.keyboardCloseButton.bottom = self.view.bottom + 30
+            }
         }, completion: nil)
     }
     
