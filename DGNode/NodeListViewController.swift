@@ -62,13 +62,13 @@ extension NodeListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let node = viewModel.nodes.value[indexPath.row]
-        node.newTextLayout()
+        _ = node.textLayout
         return node.height
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
         let node = self.viewModel.nodes.value[indexPath.row]
         viewModel.editNodeAction.apply(node).start()
     }

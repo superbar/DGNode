@@ -21,7 +21,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
     let viewModel: NodeEditViewModel
     
     let keyboardCloseButton = UIButton()
-    let nodeBackgroundView = UIScrollView()
+//    let nodeBackgroundView = UIScrollView()
     let textView = NodeTextView()
     let headImageView = NodeHeadImageView()
     lazy var shareBoardView: ShareBoardView = {
@@ -60,10 +60,13 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         getNodeImageItem.isEnabled = false
         navigationItem.rightBarButtonItems = [moreItem, getNodeImageItem]
         
-        nodeBackgroundView.frame = view.bounds
-        nodeBackgroundView.backgroundColor = .white
-        nodeBackgroundView.delegate = self
-        view.addSubview(nodeBackgroundView)
+//        nodeBackgroundView.frame = view.bounds
+//        nodeBackgroundView.backgroundColor = .white
+//        nodeBackgroundView.delegate = self
+//        nodeBackgroundView.alwaysBounceVertical = true
+//        nodeBackgroundView.alwaysBounceHorizontal = false
+//        nodeBackgroundView.isScrollEnabled = false
+//        view.addSubview(nodeBackgroundView)
         
         keyboardCloseButton.backgroundColor = .red
         keyboardCloseButton.frame.size = CGSize(width: 15, height: 15)
@@ -73,28 +76,38 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         keyboardCloseButton.addTarget(self, action: #selector(hiddenKeyboard), for: .touchUpInside)
         view.addSubview(keyboardCloseButton)
         
-        nodeBackgroundView.addSubview(headImageView)
+//        nodeBackgroundView.addSubview(headImageView)
         
         textView.placeholderText = "想要分享什么？"
         textView.placeholderFont = UIFont.systemFont(ofSize: 14.0)
         textView.textContainerInset = UIEdgeInsets(top: 50, left: 55, bottom: 50, right: 55)
+//        textView.contentInset = UIEdgeInsets(top: 50, left: 55, bottom: 50, right: 55)
         textView.font = UIFont.systemFont(ofSize: 14.0)
         textView.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         textView.delegate = self
-        textView.isScrollEnabled = false
+//        textView.isScrollEnabled = false
         textView.textParser = NodeTextParser()
         textView.allowsCopyAttributedString = false
-        nodeBackgroundView.addSubview(textView)
+        view.addSubview(textView)
         
-        headImageView.frame = CGRect(x: 0, y: 0, width: view.width, height: 200)
-        textView.frame = CGRect(x: 0, y: 0, width: view.width, height: 500)
+        headImageView.frame = CGRect(x: 0, y: 0, width: view.width, height: 250)
+        textView.frame = CGRect.init(x: 0, y: 64, width: view.width, height: view.height - 64)
+//        textView.frame.size.width -= 110
         
         viewModel.addHeadImageAction.values.observeValues { [weak self] image  in
             guard let `self` = self else { return }
             if let image = image {
-                self.viewModel.hasHeadImage.value = true
+//                self.viewModel.hasHeadImage.value = true
                 self.headImageView.setImage(image)
                 self.viewModel.node.value.headImage = image
+                let attr = NSMutableAttributedString.yy_attachmentString(withContent: self.headImageView, contentMode: .center, attachmentSize: CGSize(width: self.textView.width - 110, height: 250.0), alignTo: UIFont.systemFont(ofSize: 14), alignment: .center)
+                let text = self.textView.attributedText?.mutableCopy() as! NSMutableAttributedString
+                text.insert(attr, at: 0)
+                self.textView.textContainerInset.top = 0
+                self.textView.attributedText = text
+//                self.textView.addSubview(self.headImageView)
+//                let path = UIBezierPath(roundedRect: CGRect(x: -55, y: 0, width: self.textView.width, height: 200.0), cornerRadius: 0)
+//                self.textView.exclusionPaths = [path]
             } else {
                 self.viewModel.hasHeadImage.value = false
             }
@@ -124,13 +137,13 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
                 self.headImageView.setImage(image)
                 self.headImageView.scrollView.setZoomScale(node.zoomScale, animated: false)
                 self.headImageView.scrollView.contentOffset = node.headImageScrollRect.origin
-                headImageHeight = 200
+                headImageHeight = 0
             }
             if textHeight > 0 {
-                self.textView.top = headImageHeight
-                self.textView.height = textHeight
-                self.nodeBackgroundView.contentSize = CGSize(width: 0, height: textHeight + headImageHeight)
-                self.nodeBackgroundView.contentOffset = CGPoint(x: 0, y: 0)
+//                self.textView.top = headImageHeight
+//                self.textView.height = textHeight
+//                self.nodeBackgroundView.contentSize = CGSize(width: 0, height: textHeight + headImageHeight)
+//                self.nodeBackgroundView.contentOffset = CGPoint(x: 0, y: 0)
 
             }
         }).start()
@@ -141,17 +154,17 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
             self.viewModel.node.value.headImage = nil
         }
         
-        headImageView.reactive.isHidden <~ viewModel.hasHeadImage.map({ [weak self] has in
-            guard let `self` = self else { return !has }
-            let height: CGFloat = has ? 200.0 : 0
-            self.headImageView.frame.size.height = height
-            self.textView.top = height
-            self.nodeBackgroundView.contentSize = CGSize(width: 0, height: self.textView.height + height)
-            return !has
-        })
-        
-        headImageView.imageContainerView.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
-        headImageView.deleteHeadImageButton.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
+//        headImageView.reactive.isHidden <~ viewModel.hasHeadImage.map({ [weak self] has in
+//            guard let `self` = self else { return !has }
+////            let height: CGFloat = has ? 200.0 : 0
+////            self.headImageView.frame.size.height = height
+////            self.textView.top = height
+//            self.nodeBackgroundView.contentSize = CGSize(width: 0, height: self.textView.height)
+//            return !has
+//        })
+//        
+//        headImageView.imageContainerView.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
+//        headImageView.deleteHeadImageButton.reactive.isHidden <~ viewModel.hasHeadImage.map { !$0 }
         
         shareBoardView.closeShareBoardSignal.observeValues { [weak self] _ in
             guard let `self` = self else { return }
@@ -172,6 +185,7 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         node.zoomScale = headImageView.scrollView.zoomScale
         if !node.content.isEmpty {
             DispatchQueue.global().async {
+                node.newTextLayout()
                 node.save()
                 self.viewModel.reloadNodeListObserver.send(value: true)
             }
@@ -187,7 +201,9 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
             let selectionView: UIView = self.textView.value(forKeyPath: "selectionView.caretView") as! UIView
             let bottom = selectionView.bottom + (self.viewModel.hasHeadImage.value ? 200.0 : 0) + 64
             if y < bottom {
-                self.nodeBackgroundView.contentOffset = CGPoint(x: 0, y: bottom - y)
+                let v = self.textView.height - bottom
+                print("b:\(bottom - y) v:\(v)")
+//                self.nodeBackgroundView.scrollRectToVisible(CGRect.init(x: 0, y: 0, width: <#T##CGFloat#>, height: <#T##CGFloat#>), animated: <#T##Bool#>)
             }
         }
         UIView.animate(withDuration: transition.animationDuration, delay: 0, options: [transition.animationOption, .beginFromCurrentState], animations: {
@@ -196,17 +212,12 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         }, completion: nil)
     }
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        textView.resignFirstResponder()
-//        nodeBackgroundView.contentOffset = CGPoint(x: 0, y: 0)
-    }
-    
     func textViewDidChange(_ textView: YYTextView) {
         let textHeight = textView.textLayout?.textBoundingSize.height ?? 0.0
-        let headImageHeight: CGFloat = viewModel.hasHeadImage.value ? 200.0 : 0
+        let headImageHeight: CGFloat = viewModel.hasHeadImage.value ? 0 : 0
         guard textHeight > 0 else { return }
-        self.textView.frame.size.height = textHeight
-        nodeBackgroundView.contentSize = CGSize(width: 0, height: textHeight + headImageHeight)
+//        self.textView.frame.size.height = textHeight
+//        nodeBackgroundView.contentSize = CGSize(width: 0, height: textHeight + headImageHeight)
         navigationItem.rightBarButtonItems?.forEach({ item in
             item.isEnabled = !textView.text.isEmpty
         })

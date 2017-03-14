@@ -36,7 +36,7 @@ class NodeListViewModel {
     
     func fetchNodes() {
         DispatchQueue.global().async {
-            guard let nodes: [NodeModel] = NodeModel.objectsWhere("ORDER BY nodeID DESC", arguments: nil) as? [NodeModel] else { return }
+            let nodes: [NodeModel] = NodeModel.objectsWhere("ORDER BY nodeID DESC", arguments: nil) as! [NodeModel]
             self.nodes.value = nodes
         }
     }

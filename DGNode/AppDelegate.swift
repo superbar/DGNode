@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Service.default.viewModelService.resetRootViewModel(NodeListViewModel())
         
         initUMSocial()
+        
+        SVProgressHUD.setMaximumDismissTimeInterval(1.0)
         
         return true
     }
