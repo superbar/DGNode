@@ -36,7 +36,9 @@ class NodeListViewModel {
     
     func fetchNodes() {
         DispatchQueue.global().async {
+            let start = CACurrentMediaTime()
             let nodes: [NodeModel] = NodeModel.objectsWhere("ORDER BY nodeID DESC", arguments: nil) as! [NodeModel]
+            print(CACurrentMediaTime() - start)
             self.nodes.value = nodes
         }
     }

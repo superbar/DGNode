@@ -31,20 +31,40 @@ method_exchangeImplementations(originalMethod, swizzledMethod); \
 #pragma("clang diagnostic push")
 #pragma clang diagnostic ignored "-Wundeclared-selector"
     
-//    SwizzleMethod(YYTextView, @selector(_getAutoscrollOffset), @selector(dg_getAutoscrollOffset), NO)
-//    SwizzleMethod(YYTextView, @selector(_scrollRangeToVisible:), @selector(dg_scrollRangeToVisible:), NO)
+    SwizzleMethod(YYTextView, @selector(setSelectedTextRange:), @selector(dg_setSelectedTextRange:), NO)
     
 #pragma clang diagnostic pop
 }
 
-- (CGFloat)dg_getAutoscrollOffset
+- (void)dg_setSelectedTextRange:(YYTextRange *)selectedTextRange
 {
-    return 0.0f;
+    NSLog(@"dg_setSelectedTextRange");
 }
 
-- (void)dg_scrollRangeToVisible:(YYTextRange *)range
+@end
+
+@interface YYTextLayout (Load)
+
+@end
+
+@implementation YYTextLayout (Load)
++ (void)load
 {
+#pragma("clang diagnostic push")
+#pragma clang diagnostic ignored "-Wundeclared-selector"
     
+    SwizzleMethod(YYTextLayout, @selector(selectionRectsForRange:), @selector(dg_selectionRectsForRange:), NO)
+    
+#pragma clang diagnostic pop
+}
+
+- (NSArray *)dg_selectionRectsForRange:(YYTextRange *)range
+{
+    if (range.start.offset == 1 && range.end.offset == 1) {
+        return @[];
+    } else {
+        return [self dg_selectionRectsForRange:range];
+    }
 }
 
 @end

@@ -67,9 +67,9 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         textView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
         view.addSubview(textView)
         
-        keyboardCloseButton.backgroundColor = .red
-        keyboardCloseButton.frame.size = CGSize(width: 15, height: 15)
-        keyboardCloseButton.right = view.right
+        keyboardCloseButton.setBackgroundImage(#imageLiteral(resourceName: "keyboard_dismiss"), for: .normal)
+        keyboardCloseButton.frame.size = CGSize(width: 30, height: 30)
+        keyboardCloseButton.right = view.right - 5.0
         keyboardCloseButton.bottom = view.bottom
         keyboardCloseButton.isHidden = true
         keyboardCloseButton.addTarget(self, action: #selector(hiddenKeyboard), for: .touchUpInside)
@@ -138,7 +138,12 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         super.viewWillDisappear(animated)
         
         let node = viewModel.node.value
-        if let text = textView.attributedText?.string {
+        if var text = textView.attributedText?.string {
+            if viewModel.hasHeadImage.value {
+                let start = text.startIndex
+                let end = text.index(text.startIndex, offsetBy: 1)
+                text.replaceSubrange(start..<end, with: "")
+            }
             node.content = text
         }
         
@@ -204,12 +209,22 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
     func convertTextToImage() -> UIImage? {
         let scale = UIScreen.main.scale
         
-        let view: UIView = textView.value(forKey: "containerView") as! UIView
-        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, scale)
-        view.drawHierarchy(in: view.bounds, afterScreenUpdates: false)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
+        let nodeView: UIView = textView.value(forKey: "containerView") as! UIView
+        UIGraphicsBeginImageContextWithOptions(nodeView.frame.size, false, scale)
+        nodeView.drawHierarchy(in: nodeView.bounds, afterScreenUpdates: false)
+        let nodeImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return image
+        
+        let logo = #imageLiteral(resourceName: "logo_gary")
+        
+        let size = CGSize(width: nodeView.width, height: nodeView.height + 150)
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        nodeImage?.draw(in: CGRect(x: 0, y: 0, width: nodeView.width, height: nodeView.height))
+        logo.draw(in: CGRect(x: (nodeView.width - 40) / 2, y: nodeView.height + 80, width: 40, height: 40))
+        
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result
     }
     
     func hiddenKeyboard() {

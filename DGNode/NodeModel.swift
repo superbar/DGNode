@@ -58,6 +58,7 @@ class NodeModel: DGDataModel {
         let text: NSMutableAttributedString = NSMutableAttributedString(string: content)
         text.yy_setFont(UIFont.systemFont(ofSize: 14.0), range: text.yy_rangeOfAll())
         text.yy_setColor(UIColor(red: 143/255, green: 143/255, blue: 148/255, alpha: 1.0), range: text.yy_rangeOfAll())
+        text.yy_setLineSpacing(2.0, range: text.yy_rangeOfAll())
         let textContainer = YYTextContainer(size: size)
         textContainer.maximumNumberOfRows = 4
         textContainer.truncationType = .end

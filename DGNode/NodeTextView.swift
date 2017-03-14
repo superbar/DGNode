@@ -11,6 +11,4 @@ import YYText
 
 class NodeTextView: YYTextView {
 
-    
-
 }
