@@ -43,7 +43,6 @@
 		86B861231E71465900BC22C6 /* ShareBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B861221E71465900BC22C6 /* ShareBoardView.swift */; };
 		86B861251E714D5400BC22C6 /* NodeEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B861241E714D5400BC22C6 /* NodeEditViewController.swift */; };
 		86B861271E714D6E00BC22C6 /* NodeEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B861261E714D6E00BC22C6 /* NodeEditViewModel.swift */; };
-		86FBDD641E7797610028F104 /* YYTextView+Load.m in Sources */ = {isa = PBXBuildFile; fileRef = 86FBDD631E7797610028F104 /* YYTextView+Load.m */; };
 		86FBDD671E77DC610028F104 /* DGTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86FBDD661E77DC610028F104 /* DGTextView.m */; };
 		EC5BC7F77FD93FB898075A77 /* Pods_DGNode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45827BEF82458EC08F462681 /* Pods_DGNode.framework */; };
 /* End PBXBuildFile section */
@@ -93,8 +92,6 @@
 		86B861221E71465900BC22C6 /* ShareBoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareBoardView.swift; sourceTree = "<group>"; };
 		86B861241E714D5400BC22C6 /* NodeEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeEditViewController.swift; sourceTree = "<group>"; };
 		86B861261E714D6E00BC22C6 /* NodeEditViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeEditViewModel.swift; sourceTree = "<group>"; };
-		86FBDD621E7797610028F104 /* YYTextView+Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YYTextView+Load.h"; sourceTree = "<group>"; };
-		86FBDD631E7797610028F104 /* YYTextView+Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YYTextView+Load.m"; sourceTree = "<group>"; };
 		86FBDD651E77DC610028F104 /* DGTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGTextView.h; sourceTree = "<group>"; };
 		86FBDD661E77DC610028F104 /* DGTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGTextView.m; sourceTree = "<group>"; };
 		B73DB72CD68CA64A26F492B7 /* Pods-DGNode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DGNode.release.xcconfig"; path = "Pods/Target Support Files/Pods-DGNode/Pods-DGNode.release.xcconfig"; sourceTree = "<group>"; };
@@ -251,8 +248,6 @@
 				8678441D1E70FC1E00177660 /* UIImage+Color.swift */,
 				867844501E7109B500177660 /* UITableView+Extension.swift */,
 				864921F51E731E9D00D6547E /* UIBarButtonItem+Reactive.swift */,
-				86FBDD621E7797610028F104 /* YYTextView+Load.h */,
-				86FBDD631E7797610028F104 /* YYTextView+Load.m */,
 				86FBDD651E77DC610028F104 /* DGTextView.h */,
 				86FBDD661E77DC610028F104 /* DGTextView.m */,
 			);
@@ -481,7 +476,6 @@
 				8675B45D1E716B6E0011CD19 /* DGAlertController.swift in Sources */,
 				8678441E1E70FC1E00177660 /* UIImage+Color.swift in Sources */,
 				867844001E70432900177660 /* AppDelegate.swift in Sources */,
-				86FBDD641E7797610028F104 /* YYTextView+Load.m in Sources */,
 				8678444F1E71089700177660 /* NodeModel.swift in Sources */,
 				86B861251E714D5400BC22C6 /* NodeEditViewController.swift in Sources */,
 				864921FA1E7546A800D6547E /* NodeTextView.swift in Sources */,

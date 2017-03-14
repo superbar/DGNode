@@ -10,4 +10,5 @@
 
 @interface DGTextView : YYTextView
 @property (nonatomic, assign) BOOL isHasHeadImage;
+
 @end

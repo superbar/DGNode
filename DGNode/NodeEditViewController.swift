@@ -79,15 +79,17 @@ class NodeEditViewController: DGViewController, YYTextViewDelegate, YYTextKeyboa
         viewModel.addHeadImageAction.values.observeValues { [weak self] image  in
             guard let `self` = self else { return }
             if let image = image {
+                let oldHsa = self.viewModel.hasHeadImage.value
                 self.viewModel.hasHeadImage.value = true
                 self.headImageView.setImage(image)
                 self.viewModel.node.value.headImage = image
-                
-                let attr = NSMutableAttributedString.yy_attachmentString(withContent: self.headImageView, contentMode: .center, attachmentSize: CGSize(width: self.textView.width - 110, height: 250.0), alignTo: UIFont.systemFont(ofSize: 14), alignment: .center)
-                let text = self.textView.attributedText?.mutableCopy() as! NSMutableAttributedString
-                text.insert(attr, at: 0)
-                self.textView.textContainerInset.top = 0
-                self.textView.attributedText = text
+                if !oldHsa {
+                    let attr = NSMutableAttributedString.yy_attachmentString(withContent: self.headImageView, contentMode: .center, attachmentSize: CGSize(width: self.textView.width - 110, height: 250.0), alignTo: UIFont.systemFont(ofSize: 14), alignment: .center)
+                    let text = self.textView.attributedText?.mutableCopy() as! NSMutableAttributedString
+                    text.insert(attr, at: 0)
+                    self.textView.textContainerInset.top = 0
+                    self.textView.attributedText = text
+                }
             } else {
                 self.viewModel.hasHeadImage.value = false
             }

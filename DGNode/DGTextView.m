@@ -8,6 +8,11 @@
 
 #import "DGTextView.h"
 
+@interface YYTextView (DG)
+@property (nonatomic, strong) YYTextRange *selectedTextRange;
+- (void)_updateSelectionView;
+@end
+
 @implementation DGTextView
 
 - (void)setSelectedTextRange:(YYTextRange *)selectedTextRange
@@ -15,6 +20,23 @@
     if (!_isHasHeadImage) {
         [super setSelectedTextRange:selectedTextRange];
     }
+}
+
+- (void)_updateSelectionView
+{
+    if (!_isHasHeadImage) {
+        [super _updateSelectionView];
+        return;
+    }
+    
+    YYTextRange *range = self.selectedTextRange;
+    NSLog(@"%@", range);
+    if (range.start.offset == 0 || range.start.offset == 1) {
+        [super _updateSelectionView];
+    } else {
+        [super _updateSelectionView];
+    }
+    
 }
 
 @end
