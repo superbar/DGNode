@@ -32,15 +32,16 @@ class NodeListViewModel: ViewModel {
         
         editNodeAction.values.observeValues { [weak self] _ in
             guard let `self` = self else { return }
+            print(Date())
             self.fetchNodes()
         }
     }
     
     func fetchNodes() {
         DispatchQueue.global().async {
-            let start = CACurrentMediaTime()
+//            let start = CACurrentMediaTime()
             let nodes: [NodeModel] = NodeModel.objectsWhere("ORDER BY nodeID DESC", arguments: nil) as! [NodeModel]
-            print(CACurrentMediaTime() - start)
+//            print(CACurrentMediaTime() - start)
             self.nodes.value = nodes
         }
     }

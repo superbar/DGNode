@@ -66,7 +66,14 @@ extension NodeListViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
 
         let node = self.viewModel.nodes.value[indexPath.row]
-        viewModel.editNodeAction.apply(node).start()
+        let viewModel = NodeEditViewModel()
+        viewModel.node.value = node
+        viewModel.reloadNodeListSignal.observeValues { isChange in
+            if isChange {
+                self.viewModel.fetchNodes()
+            }
+        }
+        Service.default.viewModelService.pushViewModel(viewModel, animated: true)
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
