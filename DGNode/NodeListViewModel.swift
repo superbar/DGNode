@@ -53,6 +53,8 @@ fileprivate extension NodeListViewModel {
                 if isChange {
                     observer.send(value: ())
                 }
+            }
+            viewModel.reloadNodeListSignal.observeCompleted {
                 observer.sendCompleted()
             }
             Service.default.viewModelService.pushViewModel(viewModel, animated: true)
@@ -67,6 +69,8 @@ fileprivate extension NodeListViewModel {
                 if isChange {
                     observer.send(value: ())
                 }
+            }
+            viewModel.reloadNodeListSignal.observeCompleted {
                 observer.sendCompleted()
             }
             Service.default.viewModelService.pushViewModel(viewModel, animated: true)

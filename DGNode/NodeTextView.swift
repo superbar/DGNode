@@ -34,7 +34,7 @@ class NodeTextView: UITextView {
         }
     }
     
-    private var _placeholderFont = UIFont.systemFont(ofSize: 14.0)
+    private var _placeholderFont = UIFont.systemFont(ofSize: 16.0)
     var placeholderFont: UIFont {
         get {
             return _placeholderFont

@@ -21,10 +21,6 @@ class NodeEditViewController: DGViewController {
     let viewModel: NodeEditViewModel
     
     let tableView = UITableView()
-    
-//    let textStorage = NSTextStorage()
-//    let textLayout = NSLayoutManager()
-//    let textContainer = NSTextContainer()
     let textView: NodeTextView
     
     let keyboardCloseButton = UIButton()
@@ -39,8 +35,6 @@ class NodeEditViewController: DGViewController {
     
     init(viewModel: NodeEditViewModel) {
         self.viewModel = viewModel
-//        textStorage.addLayoutManager(textLayout)
-//        textLayout.addTextContainer(textContainer)
         textView = NodeTextView(frame: .zero, textContainer: nil)
         super.init(nibName: nil, bundle: nil)
         
@@ -83,7 +77,7 @@ class NodeEditViewController: DGViewController {
         textView.isScrollEnabled = false
         let text = NSMutableAttributedString(string: " ")
         text.yy_setColor(UIColor(hexString: "555555"), range: text.yy_rangeOfAll())
-        text.yy_setFont(UIFont.systemFont(ofSize: 14.0), range: text.yy_rangeOfAll())
+        text.yy_setFont(UIFont.systemFont(ofSize: 16.0), range: text.yy_rangeOfAll())
         text.yy_setLineSpacing(8.0, range: text.yy_rangeOfAll())
         text.yy_setKern(1.0, range: text.yy_rangeOfAll())
         textView.attributedText = text
@@ -105,6 +99,7 @@ class NodeEditViewController: DGViewController {
                 self.headImageView.setImage(image)
                 self.viewModel.node.value.headImage = image
                 self.tableView.reloadData()
+                self.updateNode()
             } else {
                 self.viewModel.hasHeadImage.value = false
             }
@@ -114,7 +109,7 @@ class NodeEditViewController: DGViewController {
             guard let `self` = self else { return }
             let text = NSMutableAttributedString(string: node.content)
             text.yy_setColor(UIColor(hexString: "555555"), range: text.yy_rangeOfAll())
-            text.yy_setFont(UIFont.systemFont(ofSize: 14.0), range: text.yy_rangeOfAll())
+            text.yy_setFont(UIFont.systemFont(ofSize: 16.0), range: text.yy_rangeOfAll())
             text.yy_setLineSpacing(8.0, range: text.yy_rangeOfAll())
             text.yy_setKern(1.0, range: text.yy_rangeOfAll())
             if !node.content.isEmpty {
@@ -137,6 +132,7 @@ class NodeEditViewController: DGViewController {
             self.textView.textContainerInset.top = 55
             self.viewModel.hasHeadImage.value = false
             self.viewModel.node.value.headImage = nil
+            self.updateNode()
         }
         
         headImageView.deleteHeadImageButton.reactive.isHidden <~ viewModel.hasHeadImage.map { [weak self] has in
@@ -155,6 +151,10 @@ class NodeEditViewController: DGViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        updateNode()
+    }
+    
+    func updateNode() {
         let node = viewModel.node.value
         if let text = textView.attributedText?.string {
             node.content = text
@@ -194,6 +194,7 @@ class NodeEditViewController: DGViewController {
         actionSheet.ambientColor = .white
         actionSheet.show()
         self.actionSheet = actionSheet
+        updateNode()
     }
 
     func convertTextToImage() -> UIImage? {
@@ -315,6 +316,7 @@ extension NodeEditViewController: YYTextKeyboardObserver {
             contentInsets.top = 64
             self.tableView.contentInset = contentInsets
             self.tableView.scrollIndicatorInsets = contentInsets
+            self.updateNode()
         }
     }
 }
