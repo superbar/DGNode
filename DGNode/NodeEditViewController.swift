@@ -54,7 +54,6 @@ class NodeEditViewController: DGViewController {
         let moreItem = UIBarButtonItem(image: #imageLiteral(resourceName: "barbuttonicon_more"), style: .plain, target: self, action: #selector(showShareBoard))
         moreItem.isEnabled = false
         let getNodeImageItem = UIBarButtonItem(image: #imageLiteral(resourceName: "addHeadImage"), style: .plain, pressed: viewModel.addHeadImageCocoaAction)
-        getNodeImageItem.isEnabled = false
         navigationItem.rightBarButtonItems = [moreItem, getNodeImageItem]
         
         tableView.frame = view.bounds
@@ -121,9 +120,7 @@ class NodeEditViewController: DGViewController {
                 self.textView.becomeFirstResponder()
             }
             self.textView.attributedText = text
-            self.navigationItem.rightBarButtonItems?.forEach({ item in
-                item.isEnabled = !text.string.isEmpty
-            })
+            self.navigationItem.rightBarButtonItems?.first?.isEnabled = !text.string.isEmpty
         }).start()
         
         headImageView.deleteHeadImageButton.reactive.controlEvents(.touchUpInside).observeValues { [weak self] _ in
@@ -267,9 +264,7 @@ extension NodeEditViewController: UITableViewDelegate, UITableViewDataSource {
 extension NodeEditViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        navigationItem.rightBarButtonItems?.forEach({ item in
-            item.isEnabled = !textView.text.isEmpty
-        })
+        navigationItem.rightBarButtonItems?.first?.isEnabled = !textView.text.isEmpty
         UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
         tableView.endUpdates()
