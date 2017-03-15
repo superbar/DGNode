@@ -7,17 +7,11 @@ PODS:
   - UMengUShare/Core (6.3.0):
     - UMengUShare/Network
   - UMengUShare/Network (6.3.0)
-  - UMengUShare/Social/QQ (6.3.0):
-    - UMengUShare/Core
-  - UMengUShare/Social/Sina (6.3.0):
-    - UMengUShare/Core
   - UMengUShare/Social/WeChat (6.3.0):
     - UMengUShare/Core
 
 DEPENDENCIES:
   - GYDataCenter
-  - UMengUShare/Social/QQ
-  - UMengUShare/Social/Sina
   - UMengUShare/Social/WeChat
 
 SPEC CHECKSUMS:
@@ -25,6 +19,6 @@ SPEC CHECKSUMS:
   GYDataCenter: 620dc2564589f50d2370a691303e0d7215f7c0af
   UMengUShare: b208ac3bcf1f63d11a100b359990e9d77a0f2085
 
-PODFILE CHECKSUM: 36a3b8dd1f3e29611a8207322857a71a13689509
+PODFILE CHECKSUM: 78eccfd8b64651391ac58e8f57b28517093886b5
 
 COCOAPODS: 1.2.1.beta.1

@@ -32,11 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func initUMSocial() {
         guard let socialManager = UMSocialManager.default() else { return }
-        socialManager.umSocialAppkey = DGNodeUMenAppKey
+        socialManager.umSocialAppkey = Configs.UMeng.appKey
         socialManager.setPlaform(.wechatSession,
-                                 appKey: DGNodeWeChatAppKey,
-                                 appSecret: DGNodeWeChatAppSecret,
-                                 redirectURL: DGNodeWeChatRedirectURL)
+                                 appKey: Configs.WeChat.appKey,
+                                 appSecret: Configs.WeChat.appSecret,
+                                 redirectURL: Configs.UMeng.redirectURL)
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {

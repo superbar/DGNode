@@ -78,13 +78,10 @@
 		8678442A1E70FEE600177660 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
 		867844301E70FF6D00177660 /* NodeListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeListViewModel.swift; sourceTree = "<group>"; };
 		867844341E71045F00177660 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
-		867844361E71065C00177660 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		867844371E71065C00177660 /* HandyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HandyJSON.framework; path = Carthage/Build/iOS/HandyJSON.framework; sourceTree = "<group>"; };
 		867844381E71065C00177660 /* PureLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PureLayout.framework; path = Carthage/Build/iOS/PureLayout.framework; sourceTree = "<group>"; };
 		867844391E71065C00177660 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		8678443A1E71065C00177660 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
 		8678443B1E71065C00177660 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
-		8678443C1E71065C00177660 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Carthage/Build/iOS/SDWebImage.framework; sourceTree = "<group>"; };
 		8678443D1E71065C00177660 /* SVProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SVProgressHUD.framework; path = Carthage/Build/iOS/SVProgressHUD.framework; sourceTree = "<group>"; };
 		8678443E1E71065C00177660 /* SwiftHEXColors.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftHEXColors.framework; path = Carthage/Build/iOS/SwiftHEXColors.framework; sourceTree = "<group>"; };
 		8678443F1E71065C00177660 /* TBActionSheetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TBActionSheetKit.framework; path = Carthage/Build/iOS/TBActionSheetKit.framework; sourceTree = "<group>"; };
@@ -134,13 +131,10 @@
 		3038FF54D3CE9B611EBF48E7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				867844361E71065C00177660 /* Alamofire.framework */,
-				867844371E71065C00177660 /* HandyJSON.framework */,
 				867844381E71065C00177660 /* PureLayout.framework */,
 				867844391E71065C00177660 /* ReactiveCocoa.framework */,
 				8678443A1E71065C00177660 /* ReactiveSwift.framework */,
 				8678443B1E71065C00177660 /* Result.framework */,
-				8678443C1E71065C00177660 /* SDWebImage.framework */,
 				8678443D1E71065C00177660 /* SVProgressHUD.framework */,
 				8678443E1E71065C00177660 /* SwiftHEXColors.framework */,
 				8678443F1E71065C00177660 /* TBActionSheetKit.framework */,

@@ -9,10 +9,18 @@
 import UIKit
 import SwiftHEXColors
 
-let DGNodeUMenAppKey = "5861e5daf5ade41326001eab"
-let DGNodeWeChatAppKey = "wxd6dc07784f2c6722"
-let DGNodeWeChatAppSecret = "6a4daf701bfe0bc1f1209580c01a1945"
-let DGNodeWeChatRedirectURL = "http://dagong.in"
+struct Configs {
+    
+    struct WeChat {
+        static let appKey = "wxd6dc07784f2c6722"
+        static let appSecret = "6a4daf701bfe0bc1f1209580c01a1945"
+    }
+    
+    struct UMeng {
+        static let appKey = "5861e5daf5ade41326001eab"
+        static let redirectURL = "5861e5daf5ade41326001eab"
+    }
+}
 
 extension UIColor {
     

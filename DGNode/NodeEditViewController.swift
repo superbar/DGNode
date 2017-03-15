@@ -271,7 +271,6 @@ extension NodeEditViewController: UITextViewDelegate {
         UIView.setAnimationsEnabled(true)
         textView.setNeedsDisplay()
     }
-
 }
 
 extension NodeEditViewController: YYTextKeyboardObserver {
