@@ -43,4 +43,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let result = UMSocialManager.default().handleOpen(url, options: options)
         return result
     }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        DataCenter.shared.saveContext()
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        DataCenter.shared.saveContext()
+    }
 }

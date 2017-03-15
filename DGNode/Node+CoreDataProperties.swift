@@ -18,7 +18,7 @@ extension Node {
     }
 
     @NSManaged public var content: String?
-    @NSManaged public var headImage: NSData?
+    @NSManaged public var headImage: Data?
     @NSManaged public var headImageOffsetX: Float
     @NSManaged public var headImageOffsetY: Float
     @NSManaged public var zoomScale: Float

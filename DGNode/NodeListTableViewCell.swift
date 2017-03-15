@@ -26,8 +26,8 @@ class NodeListTableViewCell: UITableViewCell, ReuseableCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setNode(_ node: NodeModel) {
-        let content = node.content.replacingOccurrences(of: "\n", with: "")
+    func setNode(_ node: Node) {
+        guard let content = node.content?.replacingOccurrences(of: "\n", with: "") else { return }
         let text: NSMutableAttributedString = NSMutableAttributedString(string: content)
         text.yy_setFont(.nodeListFont, range: text.yy_rangeOfAll())
         text.yy_setColor(.nodeListColor, range: text.yy_rangeOfAll())

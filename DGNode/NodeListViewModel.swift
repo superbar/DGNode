@@ -13,7 +13,7 @@ import Result
 
 class NodeListViewModel: ViewModel {
     
-    let nodes: MutableProperty<[NodeModel]> = MutableProperty([])
+    let nodes: MutableProperty<[Node]> = MutableProperty([])
     
     let createNewNodeCocoaAction: CocoaAction<UIBarButtonItem>
     let createNewNodeAction = Action(NodeListViewModel.createNewNodeSignalProducer)
@@ -38,12 +38,13 @@ class NodeListViewModel: ViewModel {
     }
     
     func fetchNodes() {
-        DispatchQueue.global().async {
-//            let start = CACurrentMediaTime()
-            let nodes: [NodeModel] = NodeModel.objectsWhere("ORDER BY nodeID DESC", arguments: nil) as! [NodeModel]
-//            print(CACurrentMediaTime() - start)
-            self.nodes.value = nodes
+        var nodes: [Node] = []
+        do {
+            nodes = try DataCenter.shared.searchEntities(description: Node.entityDescription(), predicate: nil, sort: nil) as! [Node]
+        } catch {
+            print("\(error)")
         }
+        self.nodes.value = nodes
     }
 }
 
@@ -64,7 +65,7 @@ fileprivate extension NodeListViewModel {
         }
     }
     
-    class func editNodeSignalProducer(node: NodeModel) -> SignalProducer<Void, NoError> {
+    class func editNodeSignalProducer(node: Node) -> SignalProducer<Void, NoError> {
         return SignalProducer { observer, disposable in
             let viewModel = NodeEditViewModel()
             viewModel.node.value = node

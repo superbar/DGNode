@@ -83,7 +83,7 @@ extension NodeListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let node = viewModel.nodes.value[indexPath.row]
-            node.delete()
+//            node.delete()
             viewModel.fetchNodes()
         }
     }

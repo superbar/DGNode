@@ -13,7 +13,8 @@ import Result
 
 class NodeEditViewModel: ViewModel {
     
-    let node: MutableProperty<NodeModel> = MutableProperty(NodeModel())
+    let node: MutableProperty<Node?> = MutableProperty(nil)
+    let headImage: MutableProperty<UIImage?> = MutableProperty(nil)
     let hasHeadImage = MutableProperty(false)
     
     let reloadNodeListSignal: Signal<Bool, NoError>

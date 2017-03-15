@@ -94,7 +94,7 @@ class NodeEditViewController: DGViewController {
             if let image = image {
                 self.viewModel.hasHeadImage.value = true
                 self.headImageView.setImage(image)
-                self.viewModel.node.value.headImage = image
+                self.viewModel.headImage.value = image
                 self.tableView.reloadData()
                 self.updateNode()
             } else {
@@ -104,30 +104,32 @@ class NodeEditViewController: DGViewController {
         
         viewModel.node.producer.on(value: { [weak self] node in
             guard let `self` = self else { return }
-            let text = NSMutableAttributedString(string: node.content)
+            let text = NSMutableAttributedString(string: node?.text ?? "")
             text.yy_setColor(.nodeColor, range: text.yy_rangeOfAll())
             text.yy_setFont(.nodeFont, range: text.yy_rangeOfAll())
             text.yy_setLineSpacing(8.0, range: text.yy_rangeOfAll())
             text.yy_setKern(1.0, range: text.yy_rangeOfAll())
-            if !node.content.isEmpty {
-                if let image = node.headImage {
-                    self.viewModel.hasHeadImage.value = true
-                    self.headImageView.setImage(image)
-                    self.headImageView.scrollView.setZoomScale(node.zoomScale, animated: false)
-                    self.headImageView.scrollView.contentOffset = node.headImageScrollRect.origin
-                }
-            } else {
+            
+            if text.string.isEmpty {
                 self.textView.becomeFirstResponder()
+            } else if let image = node?.image {
+                self.viewModel.hasHeadImage.value = true
+                self.viewModel.headImage.value = image
+                self.headImageView.setImage(image)
+                self.headImageView.scrollView.setZoomScale(CGFloat(node!.zoomScale), animated: false)
+                let x = CGFloat(node!.headImageOffsetX)
+                let y = CGFloat(node!.headImageOffsetY)
+                self.headImageView.scrollView.contentOffset = CGPoint(x: x, y: y)
             }
+            
             self.textView.attributedText = text
             self.navigationItem.rightBarButtonItems?.first?.isEnabled = !text.string.isEmpty
         }).start()
         
         headImageView.deleteHeadImageButton.reactive.controlEvents(.touchUpInside).observeValues { [weak self] _ in
             guard let `self` = self else { return }
-            self.textView.textContainerInset.top = 55
             self.viewModel.hasHeadImage.value = false
-            self.viewModel.node.value.headImage = nil
+            self.viewModel.headImage.value = nil
             self.updateNode()
         }
         
@@ -151,21 +153,15 @@ class NodeEditViewController: DGViewController {
     }
     
     func updateNode() {
-        let node = viewModel.node.value
-        if let text = textView.attributedText?.string {
-            node.content = text
-        }
+        guard let text = textView.attributedText?.string, !text.isEmpty else { return }
+        guard let node = viewModel.node.value ?? Node.newEntity() as? Node else { return }
         
-        node.headImageScrollRect.origin = headImageView.scrollView.contentOffset
-        node.zoomScale = headImageView.scrollView.zoomScale
-        if !node.content.isEmpty {
-            DispatchQueue.global().async {
-                node.save()
-                self.viewModel.reloadNodeListObserver.send(value: true)
-            }
-        } else {
-            viewModel.reloadNodeListObserver.send(value: false)
-        }
+        node.text = text
+        node.image = viewModel.headImage.value
+        node.headImageOffsetX = Float(headImageView.scrollView.contentOffset.x)
+        node.headImageOffsetY = Float(headImageView.scrollView.contentOffset.y)
+        node.zoomScale = Float(headImageView.scrollView.zoomScale)
+        viewModel.reloadNodeListObserver.send(value: true)
     }
     
     func showShareBoard() {
