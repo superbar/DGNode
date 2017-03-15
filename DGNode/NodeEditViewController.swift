@@ -162,7 +162,6 @@ class NodeEditViewController: DGViewController {
         node.zoomScale = headImageView.scrollView.zoomScale
         if !node.content.isEmpty {
             DispatchQueue.global().async {
-                node.newTextLayout()
                 node.save()
                 self.viewModel.reloadNodeListObserver.send(value: true)
             }

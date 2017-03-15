@@ -12,13 +12,14 @@ import PureLayout
 
 class NodeListTableViewCell: UITableViewCell, ReuseableCell {
     
-    var nodeTextView = YYLabel()
+    var nodeTextView = UILabel()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        nodeTextView.ignoreCommonProperties = true
+        nodeTextView.numberOfLines = 4
         contentView.addSubview(nodeTextView)
+        nodeTextView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -26,10 +27,12 @@ class NodeListTableViewCell: UITableViewCell, ReuseableCell {
     }
 
     func setNode(_ node: NodeModel) {
-        guard let textLayout = node.textLayout else { return }
-        nodeTextView.textLayout = textLayout
-        let height = textLayout.textBoundingSize.height
-        nodeTextView.frame = CGRect(x: 12, y: 0, width: UIScreen.main.bounds.width - 24, height: height)
-        nodeTextView.center.y = contentView.center.y
+        let content = node.content.replacingOccurrences(of: "\n", with: "")
+        let text: NSMutableAttributedString = NSMutableAttributedString(string: content)
+        text.yy_setFont(.nodeListFont, range: text.yy_rangeOfAll())
+        text.yy_setColor(.nodeListColor, range: text.yy_rangeOfAll())
+        text.yy_setLineSpacing(2.0, range: text.yy_rangeOfAll())
+        text.yy_setLineBreakMode(.byTruncatingTail, range: text.yy_rangeOfAll())
+        nodeTextView.attributedText = text
     }
 }

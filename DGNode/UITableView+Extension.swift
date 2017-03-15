@@ -26,11 +26,4 @@ extension UITableView {
         }
         return cell;
     }
-    
-    func scrollToBottom(animated: Bool) {
-        let section = numberOfSections - 1
-        let row = numberOfRows(inSection: section)
-        guard row > 0 else { return }
-        scrollToRow(at: IndexPath.init(row: row - 1, section: section), at: .bottom, animated: animated)
-    }
 }

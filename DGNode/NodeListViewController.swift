@@ -38,6 +38,8 @@ class NodeListViewController: DGViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, pressed: viewModel.createNewNodeCocoaAction)
         
         let tableView = UITableView(frame: view.bounds, style: .grouped)
+        tableView.estimatedRowHeight = 70.0
+        tableView.rowHeight = UITableViewAutomaticDimension
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableHeaderView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: CGFloat.leastNormalMagnitude)))
@@ -58,12 +60,6 @@ extension NodeListViewController: UITableViewDelegate, UITableViewDataSource {
         let node = viewModel.nodes.value[indexPath.row]
         cell.setNode(node)
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let node = viewModel.nodes.value[indexPath.row]
-        _ = node.textLayout
-        return node.height
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

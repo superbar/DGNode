@@ -10,8 +10,28 @@ import UIKit
 
 class NodeTextView: UITextView {
     
-    private var _placeholderText = ""
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        let textStorage = NSTextStorage()
+        let textLayout = NSLayoutManager()
+        textStorage.addLayoutManager(textLayout)
+        let textContainer = NSTextContainer()
+        textLayout.addTextContainer(textContainer)
+        super.init(frame: frame, textContainer: textContainer)
+    }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+//    override var attributedText: NSAttributedString! {
+//        get {
+//            return textStorage
+//        } set {
+//            textStorage.setAttributedString(newValue)
+//        }
+//    }
+    
+    private var _placeholderText = ""
     var placeholderText: String {
         get {
             return _placeholderText
@@ -22,7 +42,6 @@ class NodeTextView: UITextView {
     }
     
     private var _placeholderColor = UIColor.lightGray
-    
     var placeholderColor: UIColor {
         get {
             return _placeholderColor
