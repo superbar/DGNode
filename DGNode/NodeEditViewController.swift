@@ -114,7 +114,8 @@ class NodeEditViewController: DGViewController {
                 if let image = node.headImage {
                     self.viewModel.hasHeadImage.value = true
                     self.headImageView.setImage(image)
-                    self.viewModel.node.value.headImage = image
+                    self.headImageView.scrollView.setZoomScale(node.zoomScale, animated: false)
+                    self.headImageView.scrollView.contentOffset = node.headImageScrollRect.origin
                 }
             } else {
                 self.textView.becomeFirstResponder()
@@ -305,7 +306,6 @@ extension NodeEditViewController: YYTextKeyboardObserver {
             contentInsets.top = 64
             self.tableView.contentInset = contentInsets
             self.tableView.scrollIndicatorInsets = contentInsets
-            self.updateNode()
         }
     }
 }
