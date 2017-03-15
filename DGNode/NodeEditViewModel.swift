@@ -7,12 +7,11 @@
 //
 
 import UIKit
-import ReactiveCocoa
 import ReactiveSwift
+import ReactiveCocoa
 import Result
 
-
-class NodeEditViewModel {
+class NodeEditViewModel: ViewModel {
     
     let node: MutableProperty<NodeModel> = MutableProperty(NodeModel())
     let hasHeadImage = MutableProperty(false)
@@ -23,9 +22,10 @@ class NodeEditViewModel {
     let addHeadImageCocoaAction: CocoaAction<UIBarButtonItem>
     let addHeadImageAction = Action(NodeEditViewModel.addHeadImageSignalProducer)
     
-    init() {
+    override init() {
         (reloadNodeListSignal, reloadNodeListObserver) = Signal<Bool, NoError>.pipe()
         addHeadImageCocoaAction = CocoaAction(addHeadImageAction)
+        super.init()
     }
     
     deinit {

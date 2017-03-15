@@ -14,7 +14,6 @@ import ReactiveSwift
 import Result
 import TBActionSheetKit
 import SVProgressHUD
-import SwiftHEXColors
 
 class NodeEditViewController: DGViewController {
 
@@ -71,13 +70,12 @@ class NodeEditViewController: DGViewController {
         view.addSubview(tableView)
         
         textView.placeholderText = "想要分享什么？"
-        textView.placeholderFont = UIFont.systemFont(ofSize: 14.0)
         textView.textContainerInset = UIEdgeInsets(top: 50, left: 55, bottom: 50, right: 55)
         textView.delegate = self
         textView.isScrollEnabled = false
         let text = NSMutableAttributedString(string: " ")
-        text.yy_setColor(UIColor(hexString: "555555"), range: text.yy_rangeOfAll())
-        text.yy_setFont(UIFont.systemFont(ofSize: 16.0), range: text.yy_rangeOfAll())
+        text.yy_setColor(.nodeColor, range: text.yy_rangeOfAll())
+        text.yy_setFont(.nodeFont, range: text.yy_rangeOfAll())
         text.yy_setLineSpacing(8.0, range: text.yy_rangeOfAll())
         text.yy_setKern(1.0, range: text.yy_rangeOfAll())
         textView.attributedText = text
@@ -108,8 +106,8 @@ class NodeEditViewController: DGViewController {
         viewModel.node.producer.on(value: { [weak self] node in
             guard let `self` = self else { return }
             let text = NSMutableAttributedString(string: node.content)
-            text.yy_setColor(UIColor(hexString: "555555"), range: text.yy_rangeOfAll())
-            text.yy_setFont(UIFont.systemFont(ofSize: 16.0), range: text.yy_rangeOfAll())
+            text.yy_setColor(.nodeColor, range: text.yy_rangeOfAll())
+            text.yy_setFont(.nodeFont, range: text.yy_rangeOfAll())
             text.yy_setLineSpacing(8.0, range: text.yy_rangeOfAll())
             text.yy_setKern(1.0, range: text.yy_rangeOfAll())
             if !node.content.isEmpty {
@@ -262,15 +260,7 @@ extension NodeEditViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if viewModel.hasHeadImage.value {
-            if indexPath.row == 0 {
-                return 200
-            } else {
-                return UITableViewAutomaticDimension
-            }
-        } else {
-            return UITableViewAutomaticDimension
-        }
+        return viewModel.hasHeadImage.value && indexPath.row == 0 ? 200.0 : UITableViewAutomaticDimension
     }
 }
 

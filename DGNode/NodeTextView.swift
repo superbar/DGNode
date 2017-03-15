@@ -10,8 +10,6 @@ import UIKit
 
 class NodeTextView: UITextView {
     
-    let paese = NodeTextParser()
-    
     private var _placeholderText = ""
     
     var placeholderText: String {
@@ -34,7 +32,7 @@ class NodeTextView: UITextView {
         }
     }
     
-    private var _placeholderFont = UIFont.systemFont(ofSize: 16.0)
+    private var _placeholderFont = UIFont.nodeFont
     var placeholderFont: UIFont {
         get {
             return _placeholderFont

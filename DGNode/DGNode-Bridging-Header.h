@@ -5,5 +5,3 @@
 
 #import <UMSocialCore/UMSocialCore.h>
 #import <GYDataCenter/GYDataCenter.h>
-
-#import "DGTextView.h"

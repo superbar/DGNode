@@ -13,6 +13,8 @@
 		864921FA1E7546A800D6547E /* NodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864921F91E7546A800D6547E /* NodeTextView.swift */; };
 		8669B9E41E784B8000E46522 /* NodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8669B9E31E784B8000E46522 /* NodeTableViewCell.swift */; };
 		8669B9E61E784B8B00E46522 /* NodeHeadImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8669B9E51E784B8B00E46522 /* NodeHeadImageTableViewCell.swift */; };
+		8669B9E91E78F75A00E46522 /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8669B9E81E78F75A00E46522 /* Define.swift */; };
+		8669B9EB1E78F9CC00E46522 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8669B9EA1E78F9CC00E46522 /* ViewModel.swift */; };
 		8675B45D1E716B6E0011CD19 /* DGAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8675B45C1E716B6E0011CD19 /* DGAlertController.swift */; };
 		8675B45F1E716B970011CD19 /* DGAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8675B45E1E716B970011CD19 /* DGAlertViewModel.swift */; };
 		867844001E70432900177660 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867843FF1E70432900177660 /* AppDelegate.swift */; };
@@ -45,7 +47,6 @@
 		86B861231E71465900BC22C6 /* ShareBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B861221E71465900BC22C6 /* ShareBoardView.swift */; };
 		86B861251E714D5400BC22C6 /* NodeEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B861241E714D5400BC22C6 /* NodeEditViewController.swift */; };
 		86B861271E714D6E00BC22C6 /* NodeEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B861261E714D6E00BC22C6 /* NodeEditViewModel.swift */; };
-		86FBDD671E77DC610028F104 /* DGTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86FBDD661E77DC610028F104 /* DGTextView.m */; };
 		EC5BC7F77FD93FB898075A77 /* Pods_DGNode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45827BEF82458EC08F462681 /* Pods_DGNode.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,8 @@
 		864921F91E7546A800D6547E /* NodeTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeTextView.swift; sourceTree = "<group>"; };
 		8669B9E31E784B8000E46522 /* NodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeTableViewCell.swift; sourceTree = "<group>"; };
 		8669B9E51E784B8B00E46522 /* NodeHeadImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeHeadImageTableViewCell.swift; sourceTree = "<group>"; };
+		8669B9E81E78F75A00E46522 /* Define.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
+		8669B9EA1E78F9CC00E46522 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		8675B45C1E716B6E0011CD19 /* DGAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGAlertController.swift; sourceTree = "<group>"; };
 		8675B45E1E716B970011CD19 /* DGAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGAlertViewModel.swift; sourceTree = "<group>"; };
 		867843FC1E70432900177660 /* DGNode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DGNode.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,8 +99,6 @@
 		86B861221E71465900BC22C6 /* ShareBoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareBoardView.swift; sourceTree = "<group>"; };
 		86B861241E714D5400BC22C6 /* NodeEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeEditViewController.swift; sourceTree = "<group>"; };
 		86B861261E714D6E00BC22C6 /* NodeEditViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeEditViewModel.swift; sourceTree = "<group>"; };
-		86FBDD651E77DC610028F104 /* DGTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGTextView.h; sourceTree = "<group>"; };
-		86FBDD661E77DC610028F104 /* DGTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGTextView.m; sourceTree = "<group>"; };
 		B73DB72CD68CA64A26F492B7 /* Pods-DGNode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DGNode.release.xcconfig"; path = "Pods/Target Support Files/Pods-DGNode/Pods-DGNode.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -157,6 +158,14 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
+		8669B9E71E78F74D00E46522 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				8669B9E81E78F75A00E46522 /* Define.swift */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
 		8675B4601E71AED50011CD19 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +194,7 @@
 		867843FE1E70432900177660 /* DGNode */ = {
 			isa = PBXGroup;
 			children = (
+				8669B9E71E78F74D00E46522 /* Common */,
 				867844251E70FE8600177660 /* Service */,
 				867844151E70FA0500177660 /* Controller */,
 				867844171E70FA1200177660 /* ViewModel */,
@@ -252,8 +262,6 @@
 				8678441D1E70FC1E00177660 /* UIImage+Color.swift */,
 				867844501E7109B500177660 /* UITableView+Extension.swift */,
 				864921F51E731E9D00D6547E /* UIBarButtonItem+Reactive.swift */,
-				86FBDD651E77DC610028F104 /* DGTextView.h */,
-				86FBDD661E77DC610028F104 /* DGTextView.m */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -293,6 +301,7 @@
 				8678442A1E70FEE600177660 /* ViewModelProtocol.swift */,
 				86B8611C1E7143F000BC22C6 /* DGImagePickerViewModel.swift */,
 				8675B45E1E716B970011CD19 /* DGAlertViewModel.swift */,
+				8669B9EA1E78F9CC00E46522 /* ViewModel.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -496,12 +505,13 @@
 				8669B9E41E784B8000E46522 /* NodeTableViewCell.swift in Sources */,
 				8675B45F1E716B970011CD19 /* DGAlertViewModel.swift in Sources */,
 				86B861231E71465900BC22C6 /* ShareBoardView.swift in Sources */,
+				8669B9EB1E78F9CC00E46522 /* ViewModel.swift in Sources */,
 				86B8611B1E7143CD00BC22C6 /* DGImagePickerController.swift in Sources */,
 				867844311E70FF6D00177660 /* NodeListViewModel.swift in Sources */,
 				8669B9E61E784B8B00E46522 /* NodeHeadImageTableViewCell.swift in Sources */,
 				8678441C1E70FA7F00177660 /* UIView+Frame.swift in Sources */,
 				867844271E70FEAA00177660 /* ViewModelService.swift in Sources */,
-				86FBDD671E77DC610028F104 /* DGTextView.m in Sources */,
+				8669B9E91E78F75A00E46522 /* Define.swift in Sources */,
 				8678442B1E70FEE600177660 /* ViewModelProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

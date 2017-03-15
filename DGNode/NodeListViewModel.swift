@@ -11,7 +11,7 @@ import ReactiveSwift
 import ReactiveCocoa
 import Result
 
-class NodeListViewModel {
+class NodeListViewModel: ViewModel {
     
     let nodes: MutableProperty<[NodeModel]> = MutableProperty([])
     
@@ -19,8 +19,10 @@ class NodeListViewModel {
     let createNewNodeAction = Action(NodeListViewModel.createNewNodeSignalProducer)
     let editNodeAction = Action(NodeListViewModel.editNodeSignalProducer)
     
-    init() {
+    override init() {
         createNewNodeCocoaAction = CocoaAction(createNewNodeAction)
+        super.init()
+        
         fetchNodes()
         
         createNewNodeAction.values.observeValues { [weak self] _ in

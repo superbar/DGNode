@@ -8,7 +8,6 @@
 
 import UIKit
 import YYText
-import SwiftHEXColors
 
 class NodeModel: DGDataModel {
     
@@ -22,8 +21,8 @@ class NodeModel: DGDataModel {
         let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
         let content = self.content.replacingOccurrences(of: "\n", with: "")
         let text: NSMutableAttributedString = NSMutableAttributedString(string: content)
-        text.yy_setFont(UIFont.systemFont(ofSize: 14.0), range: text.yy_rangeOfAll())
-        text.yy_setColor(UIColor(red: 143/255, green: 143/255, blue: 148/255, alpha: 1.0), range: text.yy_rangeOfAll())
+        text.yy_setFont(.nodeListFont, range: text.yy_rangeOfAll())
+        text.yy_setColor(.nodeListColor, range: text.yy_rangeOfAll())
         let textContainer = YYTextContainer(size: size)
         textContainer.maximumNumberOfRows = 4
         textContainer.truncationType = .end
@@ -56,8 +55,8 @@ class NodeModel: DGDataModel {
         let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
         let content = self.content.replacingOccurrences(of: "\n", with: "")
         let text: NSMutableAttributedString = NSMutableAttributedString(string: content)
-        text.yy_setFont(UIFont.systemFont(ofSize: 14.0), range: text.yy_rangeOfAll())
-        text.yy_setColor(UIColor(red: 143/255, green: 143/255, blue: 148/255, alpha: 1.0), range: text.yy_rangeOfAll())
+        text.yy_setFont(.nodeListFont, range: text.yy_rangeOfAll())
+        text.yy_setColor(.nodeListColor, range: text.yy_rangeOfAll())
         text.yy_setLineSpacing(2.0, range: text.yy_rangeOfAll())
         let textContainer = YYTextContainer(size: size)
         textContainer.maximumNumberOfRows = 4
