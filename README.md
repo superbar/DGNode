@@ -1,5 +1,23 @@
 # DGNode
 
+## 简介
+
+大弓小卡是一个开源的简洁图文发布小软件。
+- 新建一张小卡
+- 写几句话
+- [可选] 添加一个题图，调整它的大小和位置
+- 分享给微信好友/群，或者朋友圈
+
+界面截图：    
+![](https://i.v2ex.co/OqBQ7UbC.png)
+![](https://i.v2ex.co/vMDh91Wk.png)
+
+分享效果截图：    
+![](https://i.v2ex.co/3x9z604p.png)    
+
+![](https://i.v2ex.co/dj8A57d8.png)
+
+
 ## Requirements
 iOS 8.0+
 Xcode 8.2+
