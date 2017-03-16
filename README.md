@@ -8,11 +8,13 @@
 - [可选] 添加一个题图，调整它的大小和位置
 - 分享给微信好友/群，或者朋友圈
 
-界面截图：    
+## 截图
+
+### 界面：
 ![](https://i.v2ex.co/OqBQ7UbC.png)
 ![](https://i.v2ex.co/vMDh91Wk.png)
 
-分享效果截图：    
+### 分享效果：    
 ![](https://i.v2ex.co/3x9z604p.png)    
 
 ![](https://i.v2ex.co/dj8A57d8.png)
@@ -54,5 +56,6 @@ $ carthage update --platform ios
 2. 点击运行![](https://camo.githubusercontent.com/fd711bda0973d03209412edd2297c3e103cd1cd6/687474703a2f2f696d67312e746263646e2e636e2f4c312f3436312f312f35343730623637376132663265616165636634313263633535656561653036326462633237356639)按钮 / `cmd + r`
 
 
+## License
 
-
+WTFPL
